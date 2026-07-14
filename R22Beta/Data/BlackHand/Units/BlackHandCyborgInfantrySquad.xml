@@ -150,6 +150,7 @@
 		<AI>
 			<HordeAIUpdate
 				id="ModuleTag_HordeAIUpdate"
+				AILuaEventsList="GenericSquadFunctions_R24"
 				AutoAcquireEnemiesWhenIdle="YES"
 				MaxCowerTime="5.0s"
 				MinCowerTime="3.0s"

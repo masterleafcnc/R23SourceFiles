@@ -630,6 +630,7 @@
 		<AI>
 			<AIUpdate
 				id="ModuleTag_AI"
+				AILuaEventsList="BaseScriptFunctions"
 				AutoAcquireEnemiesWhenIdle="YES">
 				<UnitAITargetChooserData
 					SympathyRange="25.0" />
