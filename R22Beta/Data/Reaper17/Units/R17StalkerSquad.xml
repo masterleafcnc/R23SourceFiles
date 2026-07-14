@@ -147,7 +147,7 @@
 				MeleeAttackLeashDistance="1"
 				Slots="3"
 				ObjectStatusOfContained=""
-				ConditionForEntry="INVALID">
+				ConditionForEntry="INVALID" SpawnBannerCarrierImmediately="True" BannerCarrierByUpgradeOnly="False">
 				<PassengerFilter
 					Rule="NONE"
 					Include="INFANTRY" />
@@ -171,6 +171,11 @@
 						Y="20" />
 				</RankInfo>
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
+				<BannerCarrierPosition>
+					<UnitType>HHProxy_Reaper17Stalker</UnitType>
+					<Pos x="0" y="0" />
+				</BannerCarrierPosition>
+				<BannerCarriersAllowed>HHProxy_Reaper17Stalker</BannerCarriersAllowed>
 			</HordeContain>
 			<ProductionUpdate
 				id="ModuleTag_ProductionUpdate"

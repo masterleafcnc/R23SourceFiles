@@ -454,12 +454,12 @@
 				</RankInfo>
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
 				<BannerCarrierPosition>
-					<UnitType>GDISpotter</UnitType>
+					<UnitType>HHCarrier_GDISniper</UnitType>
 					<Pos
 						x="-20"
 						y="-10" />
 				</BannerCarrierPosition>
-				<BannerCarriersAllowed>GDISpotter</BannerCarriersAllowed>
+				<BannerCarriersAllowed>HHCarrier_GDISniper</BannerCarriersAllowed>
 			</HordeContain>
 			<ProductionUpdate
 				id="749674DE"
@@ -1462,12 +1462,12 @@
 				</RankInfo>
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
 				<BannerCarrierPosition>
-					<UnitType>GDISpotter</UnitType>
+					<UnitType>HHCarrier_GDISniper</UnitType>
 					<Pos
 						x="-20"
 						y="-10" />
 				</BannerCarrierPosition>
-				<BannerCarriersAllowed>GDISpotter</BannerCarriersAllowed>
+				<BannerCarriersAllowed>HHCarrier_GDISniper</BannerCarriersAllowed>
 			</HordeContain>
 			<ProductionUpdate
 				id="749674DE"

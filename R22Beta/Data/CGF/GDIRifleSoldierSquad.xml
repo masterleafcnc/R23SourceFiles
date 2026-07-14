@@ -389,7 +389,7 @@
 				VisionOverrideSide="0"
 				ForbiddenCoverStatus=""
 				UseSlowHordeMovement="True"
-				SpawnBannerCarrierImmediately="False"
+				SpawnBannerCarrierImmediately="True"
 				BannerCarrierByUpgradeOnly="False"
 				DestroyHordeOnBannerDeath="False"
 				ExitBannerCarrierWithHorde="False"
@@ -460,6 +460,11 @@
 				</RankInfo>
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
 				<RankToReleaseWhenAttacking>2</RankToReleaseWhenAttacking>
+				<BannerCarrierPosition>
+					<UnitType>HHProxy_GDIRifleSoldier</UnitType>
+					<Pos x="0" y="0" />
+				</BannerCarrierPosition>
+				<BannerCarriersAllowed>HHProxy_GDIRifleSoldier</BannerCarriersAllowed>
 			</HordeContain>
 			<OCLSpecialPower
 				id="C86021CF"

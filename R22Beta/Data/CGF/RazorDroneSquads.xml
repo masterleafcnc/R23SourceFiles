@@ -388,7 +388,7 @@
 				VisionOverrideSide="0"
 				ForbiddenCoverStatus=""
 				UseSlowHordeMovement="True"
-				SpawnBannerCarrierImmediately="False"
+				SpawnBannerCarrierImmediately="True"
 				BannerCarrierByUpgradeOnly="False"
 				DestroyHordeOnBannerDeath="False"
 				ExitBannerCarrierWithHorde="False"
@@ -451,6 +451,11 @@
 				</RankInfo>
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
 				<RankToReleaseWhenAttacking>2</RankToReleaseWhenAttacking>
+				<BannerCarrierPosition>
+					<UnitType>HHProxy_AlienRazorDrones</UnitType>
+					<Pos x="0" y="0" />
+				</BannerCarrierPosition>
+				<BannerCarriersAllowed>HHProxy_AlienRazorDrones</BannerCarriersAllowed>
 			</HordeContain>
 			<ProductionUpdate
 				id="749674DE"
@@ -1083,7 +1088,7 @@
 				VisionOverrideSide="0"
 				ForbiddenCoverStatus=""
 				UseSlowHordeMovement="True"
-				SpawnBannerCarrierImmediately="False"
+				SpawnBannerCarrierImmediately="True"
 				BannerCarrierByUpgradeOnly="False"
 				DestroyHordeOnBannerDeath="False"
 				ExitBannerCarrierWithHorde="False"
@@ -1146,6 +1151,11 @@
 				</RankInfo>
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
 				<RankToReleaseWhenAttacking>2</RankToReleaseWhenAttacking>
+				<BannerCarrierPosition>
+					<UnitType>HHProxy_Traveler59RazorDrone</UnitType>
+					<Pos x="0" y="0" />
+				</BannerCarrierPosition>
+				<BannerCarriersAllowed>HHProxy_Traveler59RazorDrone</BannerCarriersAllowed>
 			</HordeContain>
 			<AttributeModifierUpgrade
 				id="A921E313"

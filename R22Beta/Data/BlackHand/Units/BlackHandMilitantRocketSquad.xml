@@ -641,8 +641,8 @@
 			VisionOverrideSide="0"
 			ForbiddenCoverStatus=""
 			UseSlowHordeMovement="True"
-			SpawnBannerCarrierImmediately="False"
-			BannerCarrierByUpgradeOnly="True"
+			SpawnBannerCarrierImmediately="True"
+			BannerCarrierByUpgradeOnly="False"
 			DestroyHordeOnBannerDeath="False"
 			ExitBannerCarrierWithHorde="False"
 			FollowTheLeader="False">
@@ -689,12 +689,12 @@
 			<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
 			<RankToReleaseWhenAttacking>2</RankToReleaseWhenAttacking>
 			<BannerCarrierPosition>
-				<UnitType>BlackHandBlackDisciple</UnitType>
+				<UnitType>HHCarrier_BHMilitantRocket</UnitType>
 				<Pos
 					x="20"
 					y="0" />
 			</BannerCarrierPosition>
-			<BannerCarriersAllowed>BlackHandBlackDisciple</BannerCarriersAllowed>		
+			<BannerCarriersAllowed>HHCarrier_BHMilitantRocket</BannerCarriersAllowed>
 			<OnDeathBehavior
 				RequiredStatus="PARACHUTING">
 				<OCL>OCL_RedemptionSpawn</OCL>

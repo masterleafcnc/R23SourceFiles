@@ -1439,7 +1439,7 @@
 				PassengersTestCollisionHeight="-1000"
 				NumberOfExitPaths="1"
 				DoorOpenTime="1"
-				ObjectStatusOfContained="CAN_ATTACK UNSELECTABLE ENCLOSED"
+				ObjectStatusOfContained="CAN_ATTACK UNSELECTABLE ENCLOSED RIDER4"
 				ModifierRequiredTime="100"
 				KillIfEmptyTime="0s"
 				ModelConditionsWhenNotEmpty=""
@@ -2076,5 +2076,4 @@
 		<DisplayUpgrade>Upgrade_CeramicArmor</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
-
 

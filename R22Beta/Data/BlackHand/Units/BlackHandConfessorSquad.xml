@@ -165,7 +165,7 @@
 				Slots="6"
 				ObjectStatusOfContained=""
 				ConditionForEntry="INVALID"
-				BannerCarrierByUpgradeOnly="true">
+				BannerCarrierByUpgradeOnly="False" SpawnBannerCarrierImmediately="True">
 				<PassengerFilter
 					Rule="NONE"
 					Include="INFANTRY" />
@@ -207,12 +207,12 @@
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
 				<RankToReleaseWhenAttacking>2</RankToReleaseWhenAttacking>
 				<BannerCarrierPosition>
-					<UnitType>BlackHandBlackDisciple</UnitType>
+					<UnitType>HHCarrier_BHConfessor</UnitType>
 					<Pos
 						x="35"
 						y="0" />
 				</BannerCarrierPosition>
-				<BannerCarriersAllowed>BlackHandBlackDisciple</BannerCarriersAllowed>
+				<BannerCarriersAllowed>HHCarrier_BHConfessor</BannerCarriersAllowed>
 			</HordeContain>
 			<SpecialPower
 				id="ModuleTag_CaptureSpecialPower"

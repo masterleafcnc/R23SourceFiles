@@ -435,8 +435,8 @@
 				VisionOverrideSide="0"
 				ForbiddenCoverStatus=""
 				UseSlowHordeMovement="True"
-				SpawnBannerCarrierImmediately="False"
-				BannerCarrierByUpgradeOnly="True"
+				SpawnBannerCarrierImmediately="True"
+				BannerCarrierByUpgradeOnly="False"
 				DestroyHordeOnBannerDeath="False"
 				ExitBannerCarrierWithHorde="False"
 				FollowTheLeader="False">
@@ -482,12 +482,12 @@
 				</RankInfo>
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
 				<BannerCarrierPosition>
-					<UnitType>NODConfessor</UnitType>
+					<UnitType>HHCarrier_NODMilitantRocket</UnitType>
 					<Pos
 						x="10"
 						y="0" />
 				</BannerCarrierPosition>
-				<BannerCarriersAllowed>NODConfessor</BannerCarriersAllowed>
+				<BannerCarriersAllowed>HHCarrier_NODMilitantRocket</BannerCarriersAllowed>
 				<OnDeathBehavior
 					RequiredStatus="PARACHUTING">
 					<OCL>OCL_RedemptionSpawn</OCL>

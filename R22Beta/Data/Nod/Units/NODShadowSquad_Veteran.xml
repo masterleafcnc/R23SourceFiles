@@ -399,7 +399,7 @@
 				VisionOverrideSide="0"
 				ForbiddenCoverStatus="AIRBORNE_TARGET"
 				UseSlowHordeMovement="False"
-				SpawnBannerCarrierImmediately="False"
+				SpawnBannerCarrierImmediately="True"
 				BannerCarrierByUpgradeOnly="False"
 				DestroyHordeOnBannerDeath="False"
 				ExitBannerCarrierWithHorde="False"
@@ -457,6 +457,11 @@
 				</RankInfo>
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
 				<RankToReleaseWhenAttacking>2</RankToReleaseWhenAttacking>
+				<BannerCarrierPosition>
+					<UnitType>HHProxy_NODShadow</UnitType>
+					<Pos x="0" y="0" />
+				</BannerCarrierPosition>
+				<BannerCarriersAllowed>HHProxy_NODShadow</BannerCarriersAllowed>
 			</HordeContain>
 			<ProductionUpdate
 				id="749674DE"

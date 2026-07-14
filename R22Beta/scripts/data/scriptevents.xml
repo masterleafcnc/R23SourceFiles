@@ -201,11 +201,9 @@
 			<Conditions>-ATTACHED</Conditions>
 		</ObjectStatusEvent>	
 
-		<!-- Used for rax free squads fix 
-		 -IS_MOVING_TO_RALLY_POINT is when the entire squad has come out -->
-		
+		<!-- Used for rax free squads fix -->
 		<ObjectStatusEvent Name="OnLeavingFactory">
-			<Conditions>-IS_MOVING_TO_RALLY_POINT</Conditions>
+			<Conditions>+UNSELECTABLE +IS_LEAVING_FACTORY</Conditions>
 		</ObjectStatusEvent>	
 		
 		<ObjectStatusEvent Name="OnLeavingFactory1">
@@ -215,6 +213,7 @@
 		<ObjectStatusEvent Name="OnEnclosed">
 			<Conditions>+ENCLOSED</Conditions>
 		</ObjectStatusEvent>		
+
 		<!-- Used for raged units -->
 		<ModelConditionEvent Name="OnRaged">
 			<Conditions>+EMOTION_DISSIDENT</Conditions>
@@ -578,10 +577,6 @@
 		<ModelConditionEvent Name="OnSelectedEnd">
 			<Conditions>-SELECTED</Conditions>
 		</ModelConditionEvent>		
-
-		<ModelConditionEvent Name="OnAttack">
-			<Conditions>+FIRING_A</Conditions>
-		</ModelConditionEvent>
 		
 		<!-- R23 tib events -->
 
@@ -687,13 +682,14 @@
 		<ObjectStatusEvent Name="OnRider3End">
 			<Conditions>-RIDER3</Conditions>
 		</ObjectStatusEvent>
-		
+
 		<ObjectStatusEvent Name="OnRider4">
 			<Conditions>+RIDER4</Conditions>
-		</ObjectStatusEvent>			
+		</ObjectStatusEvent>
+
 		<ObjectStatusEvent Name="OnRider4End">
 			<Conditions>-RIDER4</Conditions>
-		</ObjectStatusEvent>	
+		</ObjectStatusEvent>
 		
 		<ObjectStatusEvent Name="OnUnselectable">
 			<Conditions>+UNSELECTABLE</Conditions>
@@ -729,10 +725,6 @@
 		</ObjectStatusEvent>					
 		<ObjectStatusEvent Name="OnFiringWeaponEnd">
 			<Conditions>-IS_FIRING_WEAPON</Conditions>
-		</ObjectStatusEvent>	
-		
-		<ObjectStatusEvent Name="OnAimingWeapon">
-			<Conditions>+IS_AIMING_WEAPON</Conditions>
 		</ObjectStatusEvent>
 
 		<ObjectStatusEvent Name="OnHealth0">
@@ -905,13 +897,19 @@
 		<ScriptedEvent Name="OnBeamTargetInit" />	
 
 		<ScriptedEvent Name="TiberiumEvent" />	
-		<ScriptedEvent Name="SquadEvent" />	
 		<ScriptedEvent Name="UnitAnchorEvent" />
 		<ScriptedEvent Name="GettingOutOfTheWayEvent" />
+		<ScriptedEvent Name="HammerheadRegisterMember" />
+		<ScriptedEvent Name="HammerheadClearMember" />
     </Events>
     
     <EventList Name="BaseScriptFunctions">
 		<!-- If there are any events that need to apply to all units, put them here. jba -->
+		<EventHandler EventName="OnRider4" ScriptFunctionName="HammerheadContained" DebugSingleStep="false" />
+		<EventHandler EventName="OnRider4End" ScriptFunctionName="HammerheadContainedEnd" DebugSingleStep="false" />
+		<EventHandler EventName="HammerheadRegisterMember" ScriptFunctionName="HammerheadRegisterMember" DebugSingleStep="false" />
+		<EventHandler EventName="HammerheadClearMember" ScriptFunctionName="HammerheadClearMember" DebugSingleStep="false" />
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="HammerheadMemberDestroyed" DebugSingleStep="false" />
     </EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">
@@ -1007,10 +1005,8 @@
 		<EventHandler EventName="OnSelected"	ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
 		<EventHandler EventName="OnSelectedEnd"	ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/> -->
 		<EventHandler EventName="OnLeavingFactory" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>				
-		<!--<EventHandler EventName="OnLeavingFactory1" ScriptFunctionName="OnSquadExitRax1_R24" DebugSingleStep="false"/>		-->
+		<EventHandler EventName="OnLeavingFactory1" ScriptFunctionName="OnSquadExitRax1_R24" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed" ScriptFunctionName="OnSquadDestroyed_R24" DebugSingleStep="false"/>	
-		<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerhead" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRider4End"	ScriptFunctionName="GarrisonedInHammerheadEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NodCyborgSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
@@ -1305,9 +1301,6 @@
 
 	<EventList Name="GDIZoneTrooperFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIZoneTrooperCreated" DebugSingleStep="false"/>
-		<!-- also fires on the banner carrier! -->
-		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
-		<!--<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerheads" DebugSingleStep="false"/>-->
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1381,9 +1374,7 @@
 	<EventHandler EventName="OnCreated"	ScriptFunctionName="OnStalkerCreated" DebugSingleStep="false"/>
 	</EventList>
 
-	<!-- disint members-->
 	<EventList Name="RazorDroneFunctions_R24" Inherit="BaseScriptFunctions">
-		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="SteelTalonsRifleSoldierFunctions_R24" Inherit="BaseScriptFunctions">

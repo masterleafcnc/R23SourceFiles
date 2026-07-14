@@ -1,6 +1,69 @@
 -- ============================ GLOBAL ===================================
 -- Note that global vars cannot be accessed via subfunctions!!
 squadtable = {} -- tracks all squad objects on map
+hammerheadSquads = {} -- active ranged squads contained by Hammerheads
+hammerheadMembers = {} -- horde-member id -> active Hammerhead squad id
+hammerheadBroadcastSquadKey = nil -- synchronous HordeBroadcastEventToMembers context
+hammerheadEligibleSquads = {
+	["AlienStalkerSquad"] = true,
+	["Reaper17StalkerSquad"] = true,
+	["Traveler59StalkerSquad"] = true,
+	["BlackHandBlackHandSquad"] = true,
+	["BlackHandCyborgInfantrySquad"] = true,
+	["BlackHandShadowSquad"] = true,
+	["AlienShockTrooperSquad"] = true,
+	["AlienShockTrooperSquad_Veteran"] = true,
+	["Reaper17ShockTrooperSquad"] = true,
+	["Traveler59ShockTrooperSquad"] = true,
+	["GDIMissileSoldierSquad"] = true,
+	["GDIMissileSoldierSquad_Veteran"] = true,
+	["SteelTalonsMissileSoldierSquad"] = true,
+	["SteelTalonsMissileSoldierSquad_Veteran"] = true,
+	["ZOCOMMissileSoldierSquad"] = true,
+	["ZOCOMMissileSoldierSquad_Veteran"] = true,
+	["GDIRifleSoldierSquad"] = true,
+	["GDIRifleSoldierSquad_Veteran"] = true,
+	["SteelTalonsRifleSoldierSquad"] = true,
+	["SteelTalonsRifleSoldierSquad_Veteran"] = true,
+	["ZOCOMRifleSoldierSquad"] = true,
+	["ZOCOMRifleSoldierSquad_Veteran"] = true,
+	["MarkedOfKaneTibTrooperSquad"] = true,
+	["NODBlackHandSquad"] = true,
+	["AlienRazorDroneSquad"] = true,
+	["Traveler59RazorDroneSquad"] = true,
+	["GDIGrenadeSoldierSquad"] = true,
+	["SteelTalonsGrenadeSoldierSquad"] = true,
+	["ZOCOMGrenadeSoldierSquad"] = true,
+	["GDIZoneTrooperSquad"] = true,
+	["GDIZoneTrooperSquad_Veteran"] = true,
+	["SteelTalonsZoneTrooperSquad"] = true,
+	["SteelTalonsZoneTrooperSquad_Veteran"] = true,
+	["NODCyborgInfantrySquad"] = true,
+	["MOKCyborgInfantrySquad"] = true,
+	["MarkedOfKaneImprovedCyborgInfantrySquad"] = true,
+	["NODShadowSquad"] = true,
+	["NODShadowSquad_Veteran"] = true,
+	["MarkedOfKaneShadowSquad"] = true,
+	["MarkedOfKaneShadowSquad_Veteran"] = true,
+	["MutantMarauderSquad"] = true,
+	["ZOCOMZoneRaiderSquad"] = true,
+	["ZOCOMZoneRaiderSquad_Veteran"] = true,
+	["NODMilitantSquad"] = true,
+	["BlackHandMilitantSquad"] = true,
+	["MarkedOfKaneMilitantSquad"] = true,
+	["NODMilitantRocketSquad"] = true,
+	["MarkedOfKaneMilitantRocketSquad"] = true,
+	["BlackHandMilitantRocketSquad"] = true,
+	["BlackHandConfessorSquad"] = true,
+	["GDISniperSquad"] = true,
+	["GDISniperSquad_Veteran"] = true,
+	["ZOCOMSniperSquad"] = true,
+	["ZOCOMSniperSquad_Veteran"] = true
+}
+hammerheadCountUpgrades = {
+	"Upgrade_HHMember01", "Upgrade_HHMember02", "Upgrade_HHMember03", "Upgrade_HHMember04", "Upgrade_HHMember05",
+	"Upgrade_HHMember06", "Upgrade_HHMember07", "Upgrade_HHMember08", "Upgrade_HHMember09", "Upgrade_HHMember10"
+}
 commandeertable = {} -- tracks units commandeered by avatar 
 harvturntable = {} -- tracks harv turn
 harvturncounttable = {} -- tracks harv turn change count
@@ -158,8 +221,6 @@ flushPlayerTeams()
 harvesterData = {}
 crystalData = {}
 unitsReversing = {}
-squadTables = {}
-squadMemberTable = {}
 
 TURN_TRIGGER_COUNT = 2 -- number of turn triggers before checking if unit is bugging
 NO_COLLISION_DURATION = 4 -- seconds to disable collision on a bugged unit during fix
@@ -2377,11 +2438,13 @@ end
 -- ################ NEW FUNCTIONS FOR 1.03 RAGE STATUS #######################
 function OnRaged_103(self)
 	ObjectGrantUpgrade( self, "Upgrade_Raged" )
+	HammerheadMemberRageChanged(self, true)
 	--ExecuteAction("SHOW_MILITARY_CAPTION", "Unit raged...", 2)			
 end
 
 function OnRaged1_103(self)
 	ObjectRemoveUpgrade( self, "Upgrade_Raged" )
+	HammerheadMemberRageChanged(self, false)
 	--ExecuteAction("SHOW_MILITARY_CAPTION", "Unit no longer raged...", 2)			
 end
 
@@ -3071,155 +3134,321 @@ function OnSquadDestroyed_103(self)
 
 end
 
--- ############################# R25 Hammerhead Garrison fix ###################################
 
-function SquadIsAttacking(self)
-	print("squad is attacking!")
-end
+-- How many frames (minimum) it takes for each squad to exit rax (No. members * rax exit delay)
+function SquadLookupTable_R24(x)  -- x = object template
 
--- disable weapons on squad members, allow on the 5th member whether it be the banner carrier or extra member.
-function GarrisonedInHammerhead(self)
-	print("the squad has entered the hammerhead!")
+	local delay1 = 1 -- gdi rax delay
+	local delay2 = 1 -- nod rax delay
+	local delay3 = 5 -- scrin rax delay
+	local ans = 0
 
-	local _,squad = GetSquadAttributes(self)
-	for squadMemberId,_ in squad.squadMembers do
-		-- the unit that should shoot here -> 3FFB163C (GDIZoneTrooperGarrisoned)
-		--WriteToFile("squadMembersInHammerhead.txt",  "Member: " .. tostring(squadMemberId) .. "Leader: " .. tostring(squad.squadLeader) .. "\n")
-
-		-- units to apply NO_ATTACK to -> B821E76D (GDIZoneTrooper)
-		if strfind(squadMemberId, tostring(squad.squadLeader)) == nil then
-			-- if member is not leader - set unit to no attack
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 5, 1)
-		else
-			-- if member is the leader remove NO_ATTACK status
-			print("leader found")
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 5, 0)
-		end
-	end
-end
-
-function GarrisonedInHammerheadEnd(self)
-	print("the squad has exited the hammerhead!")
-
-	local _,squad = GetSquadAttributes(self)
-	for squadMemberId,_ in squad.squadMembers do
-		-- the unit that should shoot here -> 3FFB163C (GDIZoneTrooperGarrisoned)
-		--WriteToFile("squadMembersInHammerhead.txt",  "Member: " .. tostring(squadMemberId) .. "Leader: " .. tostring(squad.squadLeader) .. "\n")
-
-		-- units to apply NO_ATTACK to -> B821E76D (GDIZoneTrooper)
-		if strfind(squadMemberId, tostring(squad.squadLeader)) == nil then
-			-- if member is not leader - set unit to attack
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 5, 0)
-		else
-			-- if member is the leader set NO_ATTACK status
-			print("leader found")
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 5, 1)
-		end
-	end
-end
-
-function GetSquadAttributes(self)
-	local objId = getObjectId(self)
-	squadTables[objId] = squadTables[objId] or {
-		--squadSize = 0
-		squadMembers = {},
-		squadLeader = nil,
-		stringRef = SetObjectReference(self)
-	}
-	return objId, squadTables[objId]
-end
-
-function GetSquadMemberAttributes(self)
-	local objId = getObjectId(self)
-	squadMemberTable[objId] = squadMemberTable[objId] or {
-		squadObject = nil,
-		selfRef = self,
-		stringRef = SetObjectReference(self)
-	}
-	return objId, squadTables[objId]
-end
-
--- self is the squad member, broadcasting events to horde members doesnt pass the reference of the horde object
--- string is the reference to the sqaud
-function GetSquadSize(self, string) 
-
-	local squad = squadTables[string] 
-	-- get object description of member
-	--WriteToFile("ObjectDescription.txt",  "Object: " .. tostring(getObjectName(self)) .. "\n")
-	-- if this member is the banner carrier, assign it as squad leader
-	if strfind(getObjectName(self), "3FFB163C") ~= nil then
-		squad.squadLeader = getObjectId(self)
+	-- Disints
+	if strfind(tostring(x), "2B9428D0") ~= nil or strfind(tostring(x), "240FB1") ~= nil then
+		ans = 5*delay3
+	-- Shocks
+	elseif strfind(tostring(x), "4803957E") ~= nil or strfind(tostring(x), "6495F509") ~= nil or strfind(tostring(x), "40241AC3") ~= nil then
+		ans = 3*delay3
+	-- Ravs
+	elseif strfind(tostring(x), "32EA13B3") ~= nil or strfind(tostring(x), "7F2D0EF5") ~= nil or strfind(tostring(x), "72A9F5D5") ~= nil then
+		ans = 3*delay3
+	-- Cults
+	elseif strfind(tostring(x), "C46CECA2") ~= nil then
+		ans = 5*delay3
+	-- Rifles
+	elseif strfind(tostring(x), "9096966E") ~= nil or strfind(tostring(x), "AC645E3") ~= nil or strfind(tostring(x), "CF35F1B4") ~= nil then
+		ans = 6*delay1
+	-- Missiles
+	elseif strfind(tostring(x), "EF1252DB") ~= nil or strfind(tostring(x), "EA23C76F") ~= nil or strfind(tostring(x), "17A153BA") ~= nil then
+		ans = 2*delay1
+	-- Grenades
+	elseif strfind(tostring(x), "42896060") ~= nil or strfind(tostring(x), "C43CF79F") ~= nil or strfind(tostring(x), "FC6A915") ~= nil then
+		ans = 4*delay1
+	-- Zones
+	elseif strfind(tostring(x), "5D5E5931") ~= nil or strfind(tostring(x), "D213112") ~= nil or strfind(tostring(x), "7E8CB87C") ~= nil then
+		ans = 4*delay1
+	-- Militants
+	elseif strfind(tostring(x), "BC36257A") ~= nil then
+		ans = 9*delay2
+	-- Rockets
+	elseif strfind(tostring(x), "89C45844") ~= nil or strfind(tostring(x), "20126F6") ~= nil or strfind(tostring(x), "C3011861") ~= nil then
+		ans = 2*delay2
+	-- Shadows
+	elseif strfind(tostring(x), "A6E10008") ~= nil or strfind(tostring(x), "6AEA240A") ~= nil then
+		ans = 4*delay2
+	-- Blackhands/Tibtrooper
+	elseif strfind(tostring(x), "5F44F92F") ~= nil or strfind(tostring(x), "128ABF1") ~= nil or strfind(tostring(x), "E6E24EF7") ~= nil then
+		ans = 6*delay2
+	-- Fanatics
+	elseif strfind(tostring(x), "BE7C389D") ~= nil or strfind(tostring(x), "8E0F9C9") ~= nil or strfind(tostring(x), "6093B1BE") ~= nil then
+		ans = 5*delay2
+	-- Enlightened/Awakened
+	elseif strfind(tostring(x), "D5BE6F6C") ~= nil or strfind(tostring(x), "B27DDF67") ~= nil then
+		ans = 3*delay2
+	-- Concabs
+	elseif strfind(tostring(x), "FDEF5E7") ~= nil then
+		ans = 6*delay2
+	else
+		return nil
 	end
 
-	-- associate this squad member with the squad object
-	local objId,squadMember = GetSquadMemberAttributes(self)
-
-	-- add to the squad members table this unit
-	squad.squadMembers[objId] = objId
-	-- add a reference to this member of the squad it belongs to
-	squadMember[objId].squadObject = string
+	return ans
 
 end
 
 -- When squad appears at rax
-function OnSquadExitRax_R24(self)	
-	local objId,squad = GetSquadAttributes(self)
-	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
-	-- squad size is 4 here. 
-	local squadSize = getTableSize(squad.squadMembers)
-	if squadSize == nil then return end
-	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
+function OnSquadExitRax_R24(self)
 
-	-- apply upgrades to the squadLeader, use id to access member table to get its string and self 
-	--WriteToFile("squadLeader.txt",  "squad leader: " .. tostring(squad.squadLeader) .. "\n")
+	-- Get current frame and object desc
+	local c = GetFrame()
+	local a = ObjectDescription(self)
 
-	GrantUpgradesToLeader(squad)
+	--local s = "Unit leaving factory: " .. a
+	--ExecuteAction("SHOW_MILITARY_CAPTION", s, 2)
+
+	-- Save current frame and object into table
+	squadtable[a] = c
+
 end
 
--- grants as many upgrades to the squadLeader as there are squadMembers (obtained by getTableSize) for enabling weapons
-function GrantUpgradesToLeader(squad)
-	local squadSize = getTableSize(squad.squadMembers)-1
-	local squadLeader = squadMemberTable[squad.squadLeader]
-	if squadLeader == nil then return end
-	--WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
-	-- 1 member alive
-	if squadSize == 1 then
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
-	end
-	-- 2 members alive
-	if squadSize == 2 then
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
-	end
-	-- 3 members alive
-	if squadSize == 3 then
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember3") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember3") end
-	end
-	-- 4 members alive
-	if squadSize == 4 then
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember3") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember3") end
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember4") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember4") end
+-- When squad finishes leaving rax
+function OnSquadExitRax1_R24(self)
+
+	-- Get current frame and object desc
+	local c = GetFrame()
+	local a = ObjectDescription(self)
+
+	if squadtable[a] ~= nil then
+
+		-- Subtract current frame from saved frame in table to get time difference
+		local diff = c - squadtable[a]
+		local squadLookUp = SquadLookupTable_R24(ObjectTemplateName(self))
+		--local s = "Factory exit time: " .. tostring(diff) .. ", Expected exit time: " .. tostring(squadLookUp)
+		--ExecuteAction("SHOW_MILITARY_CAPTION", s, 2)
+
+		-- If diff is less than time taken for full squad to exit, kill the squad
+		if squadLookUp ~= nil then
+			if diff < squadLookUp then
+				ExecuteAction("NAMED_DELETE", self);
+				--local s = "Unit destroyed to prevent exploit: " .. tostring(a)
+				--ExecuteAction("SHOW_MILITARY_CAPTION", s, 2)
+			end
+		end
+
+		-- To ensure this routine is never re-run (eg when garrisoning)
+		squadtable[a] = nil
 	end
 
-	-- the squad leader by default should not be able to shoot 
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadLeader.stringRef, 5, 1)
+end
+
+-- ################ R25 HAMMERHEAD INFANTRY FIRING ################
+-- The real horde members are temporarily suppressed while the baked LOS proxy
+-- fires their weapon set. Only proxy damage forwards XP to the horde; the
+-- Hammerhead's own guns remain independent launchers and retain their own XP.
+
+function IsHammerheadProxyName(name)
+	return strsub(name, 1, 8) == "HHProxy_"
+end
+
+function IsHammerheadCompositeName(name)
+	return strsub(name, 1, 10) == "HHCarrier_"
+end
+
+function GetHammerheadState(squadKey)
+	if squadKey == nil then return nil end
+	return hammerheadSquads[tostring(squadKey)]
+end
+
+function HammerheadMemberCount(state)
+	local count = 0
+	if state == nil then return count end
+	for memberId, member in state.members do
+		count = count + 1
+	end
+	return count
+end
+
+function HammerheadRefreshCarrier(state)
+	if state == nil or state.carrier == nil then return end
+	local carrier = state.carrier.selfReference
+	local count = HammerheadMemberCount(state)
+	for i = 1, getn(hammerheadCountUpgrades) do
+		ObjectRemoveUpgrade(carrier, hammerheadCountUpgrades[i])
+		if i <= count then
+			ObjectGrantUpgrade(carrier, hammerheadCountUpgrades[i])
+		end
+	end
+	if state.ragedCount ~= nil and state.ragedCount > 0 then
+		ObjectGrantUpgrade(carrier, "Upgrade_Raged")
+	else
+		ObjectRemoveUpgrade(carrier, "Upgrade_Raged")
+	end
+end
+
+function HammerheadActivateCarrier(state)
+	if state == nil or state.carrier == nil then return end
+	local carrier = state.carrier.selfReference
+	if IsHammerheadProxyName(state.carrier.templateName) then
+		ObjectRemoveUpgrade(carrier, "Upgrade_HHProxyDisabled")
+	else
+		ObjectRemoveUpgrade(carrier, "Upgrade_HHReset")
+		ObjectGrantUpgrade(carrier, "Upgrade_HHActive")
+	end
+	HammerheadRefreshCarrier(state)
+end
+
+function HammerheadDeactivateCarrier(state)
+	if state == nil or state.carrier == nil then return end
+	local carrier = state.carrier.selfReference
+	for i = 1, getn(hammerheadCountUpgrades) do
+		ObjectRemoveUpgrade(carrier, hammerheadCountUpgrades[i])
+	end
+	ObjectRemoveUpgrade(carrier, "Upgrade_Raged")
+	if IsHammerheadProxyName(state.carrier.templateName) then
+		ObjectGrantUpgrade(carrier, "Upgrade_HHProxyDisabled")
+	else
+		ObjectRemoveUpgrade(carrier, "Upgrade_HHActive")
+		ObjectGrantUpgrade(carrier, "Upgrade_HHReset")
+	end
+end
+
+-- KW exposes HordeBroadcastEventToMembers with only the horde and event name.
+-- Scripted-event delivery is synchronous, so the active horde id is carried in
+-- this short-lived context instead of relying on an unsupported third argument.
+function HammerheadRegisterMember(self, source)
+	local squadKey = hammerheadBroadcastSquadKey
+	local state = GetHammerheadState(squadKey)
+	if state == nil then return end
+	local templateName = getObjectName(self)
+	if IsHammerheadProxyName(templateName) or IsHammerheadCompositeName(templateName) then
+		state.carrier = {
+			selfReference = self,
+			stringReference = SetObjectReference(self),
+			templateName = templateName
+		}
+		return
+	end
+
+	local memberId = getObjectId(self)
+	if state.members[memberId] ~= nil then return end
+	local stringReference = SetObjectReference(self)
+	local alreadySuppressed = EvaluateCondition("UNIT_HAS_OBJECT_STATUS", stringReference, 5)
+	local raged = EvaluateCondition("UNIT_HAS_UPGRADE", stringReference, "Upgrade_Raged")
+	state.members[memberId] = {
+		selfReference = self,
+		stringReference = stringReference,
+		wasAlreadySuppressed = alreadySuppressed,
+		raged = raged
+	}
+	hammerheadMembers[memberId] = tostring(squadKey)
+	if not alreadySuppressed then
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", stringReference, 5, 1)
+	end
+	if raged then state.ragedCount = state.ragedCount + 1 end
+end
+
+function HammerheadClearMember(self, source)
+	local squadKey = hammerheadBroadcastSquadKey
+	local state = GetHammerheadState(squadKey)
+	if state == nil then return end
+	local templateName = getObjectName(self)
+	if IsHammerheadProxyName(templateName) or IsHammerheadCompositeName(templateName) then return end
+	local memberId = getObjectId(self)
+	local member = state.members[memberId]
+	if member ~= nil and not member.wasAlreadySuppressed then
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", member.stringReference, 5, 0)
+	end
+	hammerheadMembers[memberId] = nil
+end
+
+function HammerheadContained(self)
+	local squadName = getObjectName(self)
+	if hammerheadEligibleSquads[squadName] ~= true then return end
+	local squadKey = getObjectId(self)
+	if hammerheadSquads[squadKey] ~= nil then return end
+	hammerheadSquads[squadKey] = {
+		members = {},
+		carrier = nil,
+		ragedCount = 0
+	}
+	hammerheadBroadcastSquadKey = tostring(squadKey)
+	HordeBroadcastEventToMembers(self, "HammerheadRegisterMember")
+	hammerheadBroadcastSquadKey = nil
+	local state = hammerheadSquads[squadKey]
+	if state.carrier == nil then
+		hammerheadBroadcastSquadKey = tostring(squadKey)
+		HordeBroadcastEventToMembers(self, "HammerheadClearMember")
+		hammerheadBroadcastSquadKey = nil
+		for memberId, _ in state.members do hammerheadMembers[memberId] = nil end
+		hammerheadSquads[squadKey] = nil
+		return
+	end
+	HammerheadActivateCarrier(state)
+end
+
+function HammerheadContainedEnd(self)
+	local squadKey = getObjectId(self)
+	local state = hammerheadSquads[squadKey]
+	if state == nil then return end
+	hammerheadBroadcastSquadKey = tostring(squadKey)
+	HordeBroadcastEventToMembers(self, "HammerheadClearMember")
+	hammerheadBroadcastSquadKey = nil
+	HammerheadDeactivateCarrier(state)
+	for memberId, _ in state.members do hammerheadMembers[memberId] = nil end
+	hammerheadSquads[squadKey] = nil
+end
+
+function HammerheadMemberDestroyed(self)
+	local memberId = getObjectId(self)
+	local squadKey = hammerheadMembers[memberId]
+	if squadKey == nil then return end
+	local state = hammerheadSquads[squadKey]
+	hammerheadMembers[memberId] = nil
+	if state == nil then return end
+	local member = state.members[memberId]
+	if member ~= nil and member.raged then
+		state.ragedCount = state.ragedCount - 1
+		if state.ragedCount < 0 then state.ragedCount = 0 end
+	end
+	state.members[memberId] = nil
+	HammerheadRefreshCarrier(state)
+end
+
+function HammerheadMemberRageChanged(self, isRaged)
+	local memberId = getObjectId(self)
+	local squadKey = hammerheadMembers[memberId]
+	if squadKey == nil then return end
+	local state = hammerheadSquads[squadKey]
+	if state == nil or state.members[memberId] == nil then return end
+	local member = state.members[memberId]
+	if isRaged and not member.raged then
+		member.raged = true
+		state.ragedCount = state.ragedCount + 1
+	elseif not isRaged and member.raged then
+		member.raged = false
+		state.ragedCount = state.ragedCount - 1
+		if state.ragedCount < 0 then state.ragedCount = 0 end
+	end
+	HammerheadRefreshCarrier(state)
+end
+
+function HammerheadDiscardSquad(self)
+	local squadKey = getObjectId(self)
+	local state = hammerheadSquads[squadKey]
+	if state == nil then return end
+	for memberId, _ in state.members do hammerheadMembers[memberId] = nil end
+	hammerheadSquads[squadKey] = nil
 end
 
 function OnSquadDestroyed_R24(self)
-	local objId = getObjectId(self)
-	-- cleanup
-	squadTables[objId] = nil
+	local a = ObjectDescription(self)
+
+	-- To ensure this routine is never re-run (eg when garrisoning)
+	squadtable[a] = nil
+	HammerheadDiscardSquad(self)
 
 end
 
--- when a member dies clear it up here
-function OnMemberDestroyed_R24(self)
-
-end
 
 -- ############################# MOBA FUNCTIONS ###################################
 

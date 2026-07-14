@@ -640,7 +640,7 @@
 				VisionOverrideSide="0"
 				ForbiddenCoverStatus=""
 				UseSlowHordeMovement="True"
-				SpawnBannerCarrierImmediately="False"
+				SpawnBannerCarrierImmediately="True"
 				BannerCarrierByUpgradeOnly="False"
 				DestroyHordeOnBannerDeath="False"
 				ExitBannerCarrierWithHorde="False"
@@ -691,6 +691,11 @@
 						LeaderIndex="0" />
 				</RankInfo>
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
+				<BannerCarrierPosition>
+					<UnitType>HHProxy_MOKCyborgInfantry</UnitType>
+					<Pos x="0" y="0" />
+				</BannerCarrierPosition>
+				<BannerCarriersAllowed>HHProxy_MOKCyborgInfantry</BannerCarriersAllowed>
 			</HordeContain>
 			<CreateAndEnterObjectSpecialPower
 				id="2C7413F4"

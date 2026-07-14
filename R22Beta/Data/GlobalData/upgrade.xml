@@ -1,58 +1,6 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
-	<!-- hammerhead garrison fix upgrades -->
-
-	<UpgradeTemplate id="Upgrade_SquadMember1"
-		Type="OBJECT"
-	/>
-
-	<UpgradeTemplate id="Upgrade_SquadMember2"
-		Type="OBJECT"
-	/>
-
-	<UpgradeTemplate id="Upgrade_SquadMember3"
-		Type="OBJECT"
-	/>
-
-	<UpgradeTemplate id="Upgrade_SquadMember4"
-		Type="OBJECT"
-	/>
-
-	<UpgradeTemplate id="Upgrade_SquadMember5"
-		Type="OBJECT"
-	/>
-
-	<UpgradeTemplate id="Upgrade_SquadMember6"
-		Type="OBJECT"
-	/>
-
-	<!-- weapon upgrade (if they have them, the upgrades above should be removed before applying these ones) -->
-
-	<UpgradeTemplate id="Upgrade_SquadMember1Enhanced"
-		Type="OBJECT"
-	/>
-
-	<UpgradeTemplate id="Upgrade_SquadMember2Enhanced"
-		Type="OBJECT"
-	/>
-
-	<UpgradeTemplate id="Upgrade_SquadMember3Enhanced"
-		Type="OBJECT"
-	/>
-
-	<UpgradeTemplate id="Upgrade_SquadMember4Enhanced"
-		Type="OBJECT"
-	/>
-
-	<UpgradeTemplate id="Upgrade_SquadMember5Enhanced"
-		Type="OBJECT"
-	/>
-
-	<UpgradeTemplate id="Upgrade_SquadMember6Enhanced"
-		Type="OBJECT"
-	/>
-
 	<!--
 	<UpgradeTemplate id="Upgrade_EngineerArmor"
 		Type="OBJECT"
@@ -323,6 +271,23 @@
 		IconImage="Button_Upgrade_Hardpoints">
 	</UpgradeTemplate>	
 	
+	<!-- Hammerhead contained-infantry proxies. These are object-local state only. -->
+	<UpgradeTemplate id="Upgrade_HHProxyDisabled" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHActive" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHReset" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHBannerHidden" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHInactive" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHMember01" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHMember02" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHMember03" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHMember04" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHMember05" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHMember06" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHMember07" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHMember08" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHMember09" Type="OBJECT" />
+	<UpgradeTemplate id="Upgrade_HHMember10" Type="OBJECT" />
+
 	<!-- steel talons railguns -->
 	
 	<UpgradeTemplate id="Upgrade_STArmoryRailgunTech"
