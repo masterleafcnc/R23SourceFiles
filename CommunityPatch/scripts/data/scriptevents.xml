@@ -691,7 +691,11 @@
 		
 		<ModelConditionEvent Name="OnDestroyedSpawn">
 			<Conditions>+DESTROYED +USER_59</Conditions>
-		</ModelConditionEvent>	
+		</ModelConditionEvent>
+		
+		<ObjectStatusEvent Name="OnCombinedEnd">
+			<Conditions>+EXITING_COMBINED</Conditions>
+		</ObjectStatusEvent>
 
 		<ObjectStatusEvent Name="OnTempDefected">
 			<Conditions>+TEMPORARILY_DEFECTED</Conditions>
@@ -974,6 +978,7 @@
 		<ScriptedEvent Name="MemberKilledOnBuilt" />
 		<ScriptedEvent Name="PhaseFieldEvent" />
 		<ScriptedEvent Name="RageGeneratorEvent" />
+		<ScriptedEvent Name="KillSlaveEvent" />
     </Events>
     
     <EventList Name="BaseScriptFunctions">
@@ -1064,6 +1069,17 @@
 	 <EventList Name="ElectroMagneticPulseControlCenter_Functions" Inherit="BuildingPowerFunctions">
   		<EventHandler EventName="OnUnpacking" ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUnpackingEnd" ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
+   	 </EventList>
+
+	 <EventList Name="TerraformingStationDummyFunctions_R24" Inherit="BaseScriptFunctions">
+  		<!--<EventHandler EventName="OnCombinedEnd" ScriptFunctionName="NoLongerCombined" DebugSingleStep="false"/>-->
+		<!-- parent is dead, lets set this unit/structure to not attack -->
+		<EventHandler EventName="KillSlaveEvent" ScriptFunctionName="SetSlaveToNoAttack" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser4End" ScriptFunctionName="kill" DebugSingleStep="false"/>
+   	 </EventList>
+
+	 <EventList Name="TerraformingStationFunctions_R24" Inherit="BaseScriptFunctions">
+  		<EventHandler EventName="OnDestroyed" ScriptFunctionName="KillSlaveFunction" DebugSingleStep="false"/>
    	 </EventList>
 
 	 <!-- r24 reverse move units -->

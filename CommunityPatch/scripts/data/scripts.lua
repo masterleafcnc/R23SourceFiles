@@ -3070,6 +3070,26 @@ function OnSquadDestroyed_103(self)
 	squadtable[a] = nil
 
 end
+-- ############################# R25 Sonic fix  ###################################
+
+function KillSlaveFunction(self)
+	ObjectBroadcastEventToAllies(self,"KillSlaveEvent", 10)`
+	-- instead of this just kill its slave already (assigned on created)
+end
+
+function SetSlaveToNoAttack(self, other)
+	print("no longer combined")
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 5, 1)
+	-- after 3 seconds kill the slave.
+	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_4", 3, 100)
+end
+
+-- when sonic emitter has been powered off 
+
+
+-- when sonic emitter has been powered on 
+
+
 
 -- ############################# R25 Redeemer Rage Generator fix  ###################################
 
@@ -3424,7 +3444,7 @@ end
 
 -- When squad appears at rax
 function OnSquadExitRax_R24(self)	
-	print("squad has finished building")
+	--print("squad has finished building")
 	local objId,squad = GetSquadAttributes(self)
 	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
 	-- squad size is 4 here. 
@@ -3439,7 +3459,7 @@ function OnSquadExitRax_R24(self)
 	-- if the squad can receive a weapon upgrade, apply setRider to true to enable it
 	if squadData.setRider then
 		squad.setRider = true
-		print("This unit can receive a weapon upgrade inside the hammerhead")
+		--print("This unit can receive a weapon upgrade inside the hammerhead")
 	end
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 end

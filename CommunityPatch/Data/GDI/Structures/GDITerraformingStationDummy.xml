@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">
+<!--Increased AI expectation of DPS to match the current DPS (2000/(1+2+1))-->
+	<Tags></Tags>
+	<Includes>
+	</Includes>
+	<GameObject
+		id="GDITerraformingStationDummy"
+		Side="GDI" 
+		KindOf="IMMOBILE CAN_ATTACK NOT_AUTOACQUIRABLE RESIST_EMP NO_COLLIDE"
+		EditorSorting="MISC_NATURAL"
+		EditorName="GDITerraformingStationDummy">
+		<DisplayName
+			xai:joinAction="Replace" xmlns:xai="uri:ea.com:eala:asset:instance">Name:GDITerraformingStation</DisplayName>
+		<ArmorSet
+			Armor="GDITerraformingStationArmor"
+			DamageFX="FactionStructureDamageFX" />
+		<Draws>
+			<ScriptedModelDraw
+				id="ModuleTag_Draw"
+				OkToChangeModelColor="true"
+				ExtraPublicBone="FX_WEAPON">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:GBTERASTA_SKN2" />
+					<WeaponFireFXBone
+						WeaponSlotID="1"
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_WEAPON_" />
+					<Turret
+						TurretNameKey="Bone_Turret"
+						TurretPitch="Bone_Turret_Pitch"
+						TurretID="1" />
+				</ModelConditionState>		
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT">
+				</AnimationState>
+			</ScriptedModelDraw>
+			<!-- DRAW CRYSTAL -->
+			<ScriptedModelDraw
+				id="ModuleTag_Draw_Crystal"
+				AttachToBoneInAnotherModule="FX_WEAPON_01"
+				OkToChangeModelColor="true">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:GBTeraSta_FX" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="PREPARING">
+					<Model
+						Name="W3DContainer:GBTeraSta_FX" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT"
+					Flags="START_FRAME_FIRST">
+					<Animation
+						AnimationName="GBTeraSta_FX"
+						AnimationMode="ONCE_BACKWARDS" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="UNPACKING">
+					<Animation
+						AnimationName="GBTeraSta_FX"
+						AnimationMode="ONCE" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="PREPARING"
+					Flags="START_FRAME_FIRST">
+					<Animation
+						AnimationName="GBTeraSta_FX"
+						AnimationMode="MANUAL" />
+					<ParticleSysBone
+						BoneName="FX_FireBone"
+						FXParticleSystemTemplate="SonicEmition"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FX_FireBone"
+						FXParticleSystemTemplate="SonicEmition_Spark"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FX_FireBone"
+						FXParticleSystemTemplate="SonicEmition_Distort"
+						FollowBone="true" />
+				</AnimationState>
+			</ScriptedModelDraw>
+			<LaserDraw
+				id="ModuleTag_LaserDraw"
+				UseDistortionShader="false"
+				Texture1_UTile="1"
+				Texture1_VTile="1.1"
+				Texture1_UScrollRate="0"
+				Texture1_VScrollRate="2"
+				Texture1_NumFrames="1"
+				Texture1_FrameRate="30"
+				Texture2_UTile="1"
+				Texture2_VTile="1"
+				Texture2_UScrollRate="0"
+				Texture2_VScrollRate="3"
+				Texture2_NumFrames="1"
+				Texture2_FrameRate="30"
+				LaserWidth="20">
+				<FXShader
+					ShaderName="Laser.fx"
+					TechniqueIndex="0">
+					<Constants>
+						<Texture
+							Name="Texture1">
+							<Value>FXBeam</Value>
+						</Texture>
+						<Texture
+							Name="Texture2">
+							<Value>FXBeam</Value>
+						</Texture>
+					</Constants>
+				</FXShader>
+			</LaserDraw>
+		</Draws>
+		<Behaviors>
+			<AttributeModifierPoolUpdate id="DefaultAttributeModifierPoolUpdate"/>
+			<WeaponSetUpdate
+				id="ModuleTag_Weapon01SetUpdate">
+				<WeaponSlotTurret
+					ID="1">
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="GDISonicShockWaveCannon" />
+					<TurretSettings
+						TurretTurnRate="180"
+						TurretPitchRate="100"
+						AllowsPitch="true"
+						MinimumPitch="-60d"
+						PitchHeight="90%"
+						MinIdleScanTime="1.0s"
+						MaxIdleScanTime="5.0s"
+						MinIdleScanAngle="0.0"
+						MaxIdleScanAngle="90.0">
+						<TurretAITargetChooserData />
+					</TurretSettings>
+				</WeaponSlotTurret>
+			</WeaponSetUpdate>
+			<LinearDamageUpdate
+				id="ModuleData_LinearDamageUpdate"
+				StartDistanceOffset="50"
+				Radius="10"
+				Length="400"
+				SweepFXList="FX_TeraSweep"
+				SweepWeapon="GDITerrainformingStationSweepWeapon"
+				Speed="100" />
+			<SlowDeath
+				id="ModuleTag_Death"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound Type="INITIAL" List="" />
+				<DieMuxData
+					DeathTypes="ALL" />
+			</SlowDeath>
+			<SlavedUpdate
+				id="ModuleTag_SlavedUpdate"
+				DieOnMastersDeath="false" />
+		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModuleTag_AI"
+				AILuaEventsList="TerraformingStationDummyFunctions_R24"
+				AutoAcquireEnemiesWhenIdle="YES">
+				<UnitAITargetChooserData
+					CanPickDynamicTargets="false" />
+			</AIUpdate>
+		</AI>
+		<Body>
+			<ActiveBody
+				id="ModuleTag_Body"
+				MaxHealth="100" />
+		</Body>
+		<Geometry
+			IsSmall="true">
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="15.0"
+				Height="10.0"></Shape>
+		</Geometry>
+	</GameObject>
+</AssetDeclaration>
