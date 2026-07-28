@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<!-- for reference 
+
+	<WeaponTemplate
+		id="AlienPlanetaryAssaultCarrierWeapon"
+		Name="AlienPlanetaryAssaultCarrierWeapon"
+		AttackRange="400.0"
+		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
+		AcceptableAimDelta="180d"
+		AntiMask="ANTI_GROUND ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY"
+		CanFireWhileMoving="true"
+		>
+		<FiringDuration
+			MinSeconds="1s"
+			MaxSeconds="1s" />
+		<Nuggets>
+			<SlavesAttackNugget/>
+		</Nuggets>
+	</WeaponTemplate>-->
+
+	<WeaponTemplate
+		id="GDITerraformingStationWeapon"
+		Name="GDITerraformingStationWeapon"
+		AttackRange="375.0"
+		MinimumAttackRange="50"
+		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
+		AcceptableAimDelta="0d">
+		<FiringDuration
+			MinSeconds="2.0s"
+			MaxSeconds="2.0s" />
+		<Nuggets>
+			<SlavesAttackNugget/>
+		</Nuggets>
+	</WeaponTemplate>
+
+	<WeaponTemplate
+		id="GDISonicShockWaveCannon"
+		Name="GDISonicShockWaveCannon"
+		AttackRange="375.0"
+		MinimumAttackRange="50"
+		WeaponSpeed="999999.0"
+		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
+		AcceptableAimDelta="0d"
+		FireSound="AudioEvent:GDI_SonicEmitter_WeaponFire"
+		FireFX="FX_ShattererSonicFire"
+		ClipSize="1">
+		<PreAttackDelay
+			MinSeconds="1.0s"
+			MaxSeconds="1.0s" />
+		<!-- compensate for late spawn-->
+		<FiringDuration
+			MinSeconds="3.0s"
+			MaxSeconds="3.0s" />
+			<!--
+		<ClipReloadTime
+			MinSeconds="1.0s"
+			MaxSeconds="1.0s" /> -->
+		<Nuggets>
+			<ActivateLinearDamageNugget Lifetime="2.0s" />
+		</Nuggets>
+	</WeaponTemplate>
+
+
 	<!-- supersonic airstrike fix-->
 
 	<WeaponTemplate

@@ -258,7 +258,7 @@
 					ID="1">
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="AlienPlanetaryAssaultCarrierWeapon" />
+						Template="GDITerraformingStationWeapon" />
 					<TurretSettings
 						TurretTurnRate="360"
 						TurretPitchRate="360"
@@ -343,7 +343,7 @@
 		<AI>
 			<AIUpdate
 				id="ModuleTag_AI"
-				MaxCombineChildren="1"
+				MaxCombineChildren="2"
 				AILuaEventsList="TerraformingStationFunctions_R24"
 				AutoAcquireEnemiesWhenIdle="YES">
 				<UnitAITargetChooserData
