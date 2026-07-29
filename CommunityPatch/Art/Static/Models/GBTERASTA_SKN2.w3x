@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<W3DContainer id="GBTERASTA_SKN2" Hierarchy="GBTERASTA_SKL">
+		<SubObject SubObjectID="OBBOX03" BoneIndex="0">
+			<RenderObject>
+				<CollisionBox>GBTERASTA_SKN.OBBOX03</CollisionBox>
+			</RenderObject>
+		</SubObject>
+		<SubObject SubObjectID="OBBOX02" BoneIndex="0">
+			<RenderObject>
+				<CollisionBox>GBTERASTA_SKN.OBBOX02</CollisionBox>
+			</RenderObject>
+		</SubObject>
+		<SubObject SubObjectID="OBBOX01" BoneIndex="0">
+			<RenderObject>
+				<CollisionBox>GBTERASTA_SKN.OBBOX01</CollisionBox>
+			</RenderObject>
+		</SubObject>
 	</W3DContainer>
 </AssetDeclaration>

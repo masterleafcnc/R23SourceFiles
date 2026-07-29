@@ -693,8 +693,12 @@
 			<Conditions>+DESTROYED +USER_59</Conditions>
 		</ModelConditionEvent>
 		
-		<ObjectStatusEvent Name="OnCombinedEnd">
-			<Conditions>+EXITING_COMBINED</Conditions>
+		<ObjectStatusEvent Name="OnCombinedParent">
+			<Conditions>+COMBINED_PARENT</Conditions>
+		</ObjectStatusEvent>
+
+		<ObjectStatusEvent Name="OnCombinedAttached">
+			<Conditions>+COMBINED_ATTACHED</Conditions>
 		</ObjectStatusEvent>
 
 		<ObjectStatusEvent Name="OnTempDefected">
@@ -1075,12 +1079,19 @@
   		<!--<EventHandler EventName="OnCombinedEnd" ScriptFunctionName="NoLongerCombined" DebugSingleStep="false"/>-->
 		<!-- parent is dead, lets set this unit/structure to not attack -->
 		<EventHandler EventName="OnUser4End" ScriptFunctionName="kill" DebugSingleStep="false"/>
-		<EventHandler EventName="OnCreated" ScriptFunctionName="SlaveHasSpawned" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="GetSlaveFunction" DebugSingleStep="false"/>
+		<!-- this works as hook, replace with fire once weapon in object
+		<EventHandler EventName="OnAttackingPosition" ScriptFunctionName="ForceFiringGround" DebugSingleStep="false"/> -->
    	 </EventList>
 
 	 <EventList Name="TerraformingStationFunctions_R24" Inherit="BaseScriptFunctions">
-  		<EventHandler EventName="OnDestroyed" ScriptFunctionName="KillSlaveFunction" DebugSingleStep="false"/>
+		<!-- sonic emitter sold/destroyed -->
+  		<EventHandler EventName="OnDestroyed" ScriptFunctionName="MasterHasBeenDestroyed" DebugSingleStep="false"/>
+		<!-- powered off -->
+
+		<!-- powered on -->
 		<EventHandler EventName="GetSlaveEvent" ScriptFunctionName="SetupSlaveAndOwner" DebugSingleStep="false"/>
+		<!--<EventHandler EventName="OnCombinedParent" ScriptFunctionName="combinedAttached" DebugSingleStep="false"/>-->
    	 </EventList>
 
 	 <!-- r24 reverse move units -->

@@ -160,9 +160,15 @@
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
+			<!--
 			<SlavedUpdate
 				id="ModuleTag_SlavedUpdate"
-				DieOnMastersDeath="false" />
+				DieOnMastersDeath="false" /> -->
+
+				<FireWeaponUpdate
+					id="ModuleTag_FireWeaponUpdate">
+					<FireWeaponNugget 	WeaponName="SonicSpawnedWeapon" 	OneShot="true" />				
+				</FireWeaponUpdate>	
 		</Behaviors>
 		<AI>
 			<AIUpdate
@@ -170,7 +176,7 @@
 				AILuaEventsList="TerraformingStationDummyFunctions_R24"
 				AutoAcquireEnemiesWhenIdle="YES">
 				<UnitAITargetChooserData
-					CanPickDynamicTargets="false" />
+					CanPickDynamicTargets="True" />
 			</AIUpdate>
 		</AI>
 		<Body>

@@ -3074,35 +3074,50 @@ end
 
 sonicTable = {}
 
+function GetSlaveFunction(self)
+	print("!")
+	ObjectBroadcastEventToAllies(self,"GetSlaveEvent", 25)
+end
+
 function GetSonicProperties(self)
 	local objId = getObjectId(self)
 	sonicTable[objId] = sonicTable[objId] or {
-		slave = nil -- if not nil try assign a slave
+		slave = nil, -- if not nil try assign a slave
+		slaveRef = nil
 	}
-end
-
-function SlaveHasSpawned(self)
-	ObjectBroadcastEventToAllies(self,"GetSlaveEvent", 5)
-end
-
-function KillSlaveFunction(self)
-	kill(GetSonicProperties(self).slave)
+	return objId, sonicTable[objId]
 end
 
 -- self is the sonic emitter, other is the slave
 function SetupSlaveAndOwner(self, other)
-	--print("no longer combined")
-	local sonicEmitter = GetSonicProperties(self)
+	print("no longer combined")
+	local _,sonicEmitter = GetSonicProperties(self)
 	sonicEmitter.slave = sonicEmitter.slave or other
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(other), 5, 1)
-	-- after 3 seconds kill the slave.
-	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", other, "USER_4", 3, 100)
+	sonicEmitter.slaveRef = SetObjectReference(other)
+	print(tostring(ObjectDescription(self)))
 end
 
--- when sonic emitter has been powered off 
+function ForceFiringGround(self)
+	print("force firing ground")
+	local _,sonicEmitter = GetSonicProperties(self)
+	--ExecuteAction("NAMED_ATTACK_NAMED", sonicEmitter.slave, self)
+end
+
+-- when sonic emitter has been powered destroyed
+function MasterHasBeenDestroyed(self)
+	local _,sonicEmitter = GetSonicProperties(self)
+	-- set slave to NO_ATTACK
+	print(tostring(sonicEmitter.slaveRef))
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", sonicEmitter.slaveRef, 5, 1)
+	-- kill the slave after 3 seconds has passed to allow ample time for the linear damage
+	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", sonicEmitter.slave, "USER_4", 3, 100)
+	--print("destroyed!")
+end
+
+-- when sonic emitter has been powered on set object status NO_ATTACK to 0
 
 
--- when sonic emitter has been powered on 
+-- when sonic emitter has been powered off set object status NO_ATTACK to 1
 
 
 -- ############################# R25 Redeemer Rage Generator fix  ###################################

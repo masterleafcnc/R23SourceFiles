@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
-	<!-- for reference 
-
 	<WeaponTemplate
-		id="AlienPlanetaryAssaultCarrierWeapon"
-		Name="AlienPlanetaryAssaultCarrierWeapon"
-		AttackRange="400.0"
-		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
-		AcceptableAimDelta="180d"
-		AntiMask="ANTI_GROUND ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY"
-		CanFireWhileMoving="true"
+		id="SonicSpawnedWeapon"
+		Name="SonicSpawnedWeapon"
+		RadiusDamageAffects="ALLIES"
+		AttackRange="50000.0"
 		>
 		<FiringDuration
-			MinSeconds="1s"
-			MaxSeconds="1s" />
+			MinSeconds="0.1s"
+			MaxSeconds="0.1s" />
 		<Nuggets>
-			<SlavesAttackNugget/>
+			<LuaEventNugget
+			Radius="100.0"
+			EventName="GetSlaveEvent"
+			SendToAllies="true"
+		></LuaEventNugget>
 		</Nuggets>
-	</WeaponTemplate>-->
+	</WeaponTemplate>
 
 	<WeaponTemplate
 		id="GDITerraformingStationWeapon"
@@ -37,11 +36,9 @@
 
 	<!-- get the first frame of +STRUCTURE_UNPACKING and if this weapon fires in the first 1.5s (-STRUCTURE_UNPACKING) record the frame to deternube if GDISonicShockWaveCannon should activate (WEAPON_UPGRADED_01)  set a model state for the duration that this has left by subtracting
 	 the difference of frames (+STRUCTURE_UNPACKING +FIRING_A - +STRUCTURE_UNPACKING) in seconds plus 4s in frames. when that model state expires set the upgraded status   -->
-
 	 <!--  (-STRUCTURE_UNPACKING - (+STRUCTURE_UNPACKING +FIRING_A + +STRUCTURE_UNPACKING)) should provide the time to subtract from 4s . if its < 0.5 then subtract until its 0.5  -->
-
 	 <!-- 1,5s - (-STRUCTURE_UNPACKING - +STRUCTURE_UNPACKING +FIRING_A) = x -->
-	  <!-- x - y = 1s  has to be 1s due to preattackdelay -->
+	 <!-- x - y = 1s  has to be 1s due to preattackdelay -->
 	<WeaponTemplate
 		id="GDISonicShockWaveCannonSpawn"
 		Name="GDISonicShockWaveCannonSpawn"
