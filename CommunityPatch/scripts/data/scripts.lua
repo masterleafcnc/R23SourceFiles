@@ -3093,7 +3093,7 @@ function SetupSlaveAndOwner(self, other)
 	print("no longer combined")
 	local _,sonicEmitter = GetSonicProperties(self)
 	sonicEmitter.slave = sonicEmitter.slave or other
-	sonicEmitter.slaveRef = SetObjectReference(other)
+	sonicEmitter.slaveRef = sonicEmitter.slaveRef or SetObjectReference(other)
 	print(tostring(ObjectDescription(self)))
 end
 

@@ -12,7 +12,7 @@
 			MaxSeconds="0.1s" />
 		<Nuggets>
 			<LuaEventNugget
-			Radius="100.0"
+			Radius="5.0"
 			EventName="GetSlaveEvent"
 			SendToAllies="true"
 		></LuaEventNugget>
