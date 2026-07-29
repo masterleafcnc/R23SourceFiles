@@ -3072,23 +3072,37 @@ function OnSquadDestroyed_103(self)
 end
 -- ############################# R25 Sonic fix  ###################################
 
-function KillSlaveFunction(self)
-	ObjectBroadcastEventToAllies(self,"KillSlaveEvent", 10)`
-	-- instead of this just kill its slave already (assigned on created)
+sonicTable = {}
+
+function GetSonicProperties(self)
+	local objId = getObjectId(self)
+	sonicTable[objId] = sonicTable[objId] or {
+		slave = nil -- if not nil try assign a slave
+	}
 end
 
-function SetSlaveToNoAttack(self, other)
-	print("no longer combined")
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 5, 1)
+function SlaveHasSpawned(self)
+	ObjectBroadcastEventToAllies(self,"GetSlaveEvent", 5)
+end
+
+function KillSlaveFunction(self)
+	kill(GetSonicProperties(self).slave)
+end
+
+-- self is the sonic emitter, other is the slave
+function SetupSlaveAndOwner(self, other)
+	--print("no longer combined")
+	local sonicEmitter = GetSonicProperties(self)
+	sonicEmitter.slave = sonicEmitter.slave or other
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(other), 5, 1)
 	-- after 3 seconds kill the slave.
-	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_4", 3, 100)
+	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", other, "USER_4", 3, 100)
 end
 
 -- when sonic emitter has been powered off 
 
 
 -- when sonic emitter has been powered on 
-
 
 
 -- ############################# R25 Redeemer Rage Generator fix  ###################################

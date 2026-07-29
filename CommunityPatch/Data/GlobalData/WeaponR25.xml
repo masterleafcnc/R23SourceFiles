@@ -35,6 +35,40 @@
 		</Nuggets>
 	</WeaponTemplate>
 
+	<!-- get the first frame of +STRUCTURE_UNPACKING and if this weapon fires in the first 1.5s (-STRUCTURE_UNPACKING) record the frame to deternube if GDISonicShockWaveCannon should activate (WEAPON_UPGRADED_01)  set a model state for the duration that this has left by subtracting
+	 the difference of frames (+STRUCTURE_UNPACKING +FIRING_A - +STRUCTURE_UNPACKING) in seconds plus 4s in frames. when that model state expires set the upgraded status   -->
+
+	 <!--  (-STRUCTURE_UNPACKING - (+STRUCTURE_UNPACKING +FIRING_A + +STRUCTURE_UNPACKING)) should provide the time to subtract from 4s . if its < 0.5 then subtract until its 0.5  -->
+
+	 <!-- 1,5s - (-STRUCTURE_UNPACKING - +STRUCTURE_UNPACKING +FIRING_A) = x -->
+	  <!-- x - y = 1s  has to be 1s due to preattackdelay -->
+	<WeaponTemplate
+		id="GDISonicShockWaveCannonSpawn"
+		Name="GDISonicShockWaveCannonSpawn"
+		AttackRange="375.0"
+		MinimumAttackRange="50"
+		WeaponSpeed="999999.0"
+		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
+		AcceptableAimDelta="0d"
+		FireSound="AudioEvent:GDI_SonicEmitter_WeaponFire"
+		FireFX="FX_ShattererSonicFire"
+		ClipSize="1">
+		<!-- when the sonic emitter is unpacking this needs to be the preattackdelay-->
+		<PreAttackDelay
+			MinSeconds="1.0s"
+			MaxSeconds="1.0s" />
+		<!-- compensate for late spawn-->
+		<FiringDuration
+			MinSeconds="2.0s"
+			MaxSeconds="2.0s" />
+		<ClipReloadTime
+			MinSeconds="1.0s"
+			MaxSeconds="1.0s" /> 
+		<Nuggets>
+			<ActivateLinearDamageNugget Lifetime="2.0s" />
+		</Nuggets>
+	</WeaponTemplate>
+
 	<WeaponTemplate
 		id="GDISonicShockWaveCannon"
 		Name="GDISonicShockWaveCannon"
@@ -46,13 +80,14 @@
 		FireSound="AudioEvent:GDI_SonicEmitter_WeaponFire"
 		FireFX="FX_ShattererSonicFire"
 		ClipSize="1">
+		<!-- when the sonic emitter is unpacking this needs to be the preattackdelay-->
 		<PreAttackDelay
-			MinSeconds="1.0s"
-			MaxSeconds="1.0s" />
+			MinSeconds="0.5s"
+			MaxSeconds="0.5s" />
 		<!-- compensate for late spawn-->
 		<FiringDuration
-			MinSeconds="3.0s"
-			MaxSeconds="3.0s" />
+			MinSeconds="3.5s"
+			MaxSeconds="3.5s" />
 			<!--
 		<ClipReloadTime
 			MinSeconds="1.0s"
@@ -61,6 +96,7 @@
 			<ActivateLinearDamageNugget Lifetime="2.0s" />
 		</Nuggets>
 	</WeaponTemplate>
+
 
 
 	<!-- supersonic airstrike fix-->

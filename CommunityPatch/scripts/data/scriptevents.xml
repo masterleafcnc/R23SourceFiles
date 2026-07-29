@@ -978,7 +978,7 @@
 		<ScriptedEvent Name="MemberKilledOnBuilt" />
 		<ScriptedEvent Name="PhaseFieldEvent" />
 		<ScriptedEvent Name="RageGeneratorEvent" />
-		<ScriptedEvent Name="KillSlaveEvent" />
+		<ScriptedEvent Name="GetSlaveEvent" />
     </Events>
     
     <EventList Name="BaseScriptFunctions">
@@ -1074,12 +1074,13 @@
 	 <EventList Name="TerraformingStationDummyFunctions_R24" Inherit="BaseScriptFunctions">
   		<!--<EventHandler EventName="OnCombinedEnd" ScriptFunctionName="NoLongerCombined" DebugSingleStep="false"/>-->
 		<!-- parent is dead, lets set this unit/structure to not attack -->
-		<EventHandler EventName="KillSlaveEvent" ScriptFunctionName="SetSlaveToNoAttack" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser4End" ScriptFunctionName="kill" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="SlaveHasSpawned" DebugSingleStep="false"/>
    	 </EventList>
 
 	 <EventList Name="TerraformingStationFunctions_R24" Inherit="BaseScriptFunctions">
   		<EventHandler EventName="OnDestroyed" ScriptFunctionName="KillSlaveFunction" DebugSingleStep="false"/>
+		<EventHandler EventName="GetSlaveEvent" ScriptFunctionName="SetupSlaveAndOwner" DebugSingleStep="false"/>
    	 </EventList>
 
 	 <!-- r24 reverse move units -->

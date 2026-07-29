@@ -263,8 +263,7 @@
 						TurretTurnRate="360"
 						TurretPitchRate="360"
 						AllowsPitch="true">
-						<TurretAITargetChooserData
-							ActiveWhenPerformingSpecialAbility="true" />
+						<TurretAITargetChooserData />
 					</TurretSettings>
 				</WeaponSlotTurret>
 			</WeaponSetUpdate>
