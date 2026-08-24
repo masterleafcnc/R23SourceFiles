@@ -3690,13 +3690,13 @@ end
 -- this defines squad sizes and if a squad has a hammerhead garrison banner carrier.
 squadSizeTable = {
 	-- vGDI
-	["5D5E5931"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_", isAirborne = false, isAirborne = false}, -- GDIZoneTrooperSquad
-	["BD0F31E6"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_", isAirborne = false}, -- GDIZoneTrooperSquad_Veteran
-	["9096966E"] = {size = 6, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_", isAirborne = false}, -- GDIRifleSoldierSquad
-	["F90AE74"] = {size = 6, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_", isAirborne = true}, -- GDIRifleSoldierSquad_Veteran
-	["42896060"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIGrenadeSoldierSquadExperienceLevel_", isAirborne = false}, -- GDIGrenadeSoldierSquad
-	["EF1252DB"] = {size = 2, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_", isAirborne = false}, -- GDIMissileSoldierSquad
-	["96C215F3"] = {size = 2, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_", isAirborne = true}, -- GDIMissileSoldierSquad_Veteran
+	["5D5E5931"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_", bannerExperienceLvlString = "GDIZoneTrooperGarrisonedExperienceLevel_", isAirborne = false}, -- GDIZoneTrooperSquad
+	["BD0F31E6"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_", bannerExperienceLvlString = "GDIZoneTrooperGarrisonedExperienceLevel_", isAirborne = false}, -- GDIZoneTrooperSquad_Veteran
+	["9096966E"] = {size = 6, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_", bannerExperienceLvlString = "GDIRifleSoldierGarrisonedExperienceLevel_", isAirborne = false}, -- GDIRifleSoldierSquad
+	["F90AE74"] = {size = 6, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_", bannerExperienceLvlString = "GDIRifleSoldierGarrisonedExperienceLevel_", isAirborne = true}, -- GDIRifleSoldierSquad_Veteran
+	["42896060"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIGrenadeSoldierSquadExperienceLevel_", bannerExperienceLvlString = "GDIGrenadeSoldierGarrisonedExperienceLevel_", isAirborne = false}, -- GDIGrenadeSoldierSquad
+	["EF1252DB"] = {size = 2, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_", bannerExperienceLvlString = "GDIMissileSoldierGarrisonedExperienceLevel_", isAirborne = false}, -- GDIMissileSoldierSquad
+	["96C215F3"] = {size = 2, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_", bannerExperienceLvlString = "GDIMissileSoldierGarrisonedExperienceLevel_", isAirborne = true}, -- GDIMissileSoldierSquad_Veteran
 	["BCB36A05"] = {size = 2, needsRocketFix = false, isAirborne = false}, -- GDISniperSquad
 	["CF21C755"] = {size = 2, needsRocketFix = false, isAirborne = false}, -- GDISniperSquad_Veteran
 	-- vScrin
@@ -3720,22 +3720,22 @@ squadSizeTable = {
 	["8EEE4A0A"] = {size = 5, needsRocketFix = false, isAirborne = false}, -- Reaper17RazorDroneSquad
 
 	-- ZOCOM
-	["D213112"] = {size = 4, needsRocketFix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_", isAirborne = false}, -- ZOCOMZoneRaiderSquad
-	["8A6E8182"] = {size = 4, needsRocketFix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_", isAirborne = false}, -- ZOCOMZoneRaiderSquad_Veteran
-	["AC645E3"] = {size = 6, needsRocketFix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_", isAirborne = false}, -- ZOCOMRifleSoldierSquad
-	["A457A93"] = {size = 6, needsRocketFix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_", isAirborne = true}, -- ZOCOMRifleSoldierSquad_Veteran
-	["C43CF79F"] = {size = 4, needsRocketFix = false, experienceLvlString = "ZOCOMGrenadeSoldierSquadExperienceLevel_", isAirborne = false}, -- ZOCOMGrenadeSoldierSquad
-	["17A153BA"] = {size = 2, needsRocketFix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_", isAirborne = false}, -- ZOCOMMissileSoldierSquad
-	["B0C5EE48"] = {size = 2, needsRocketFix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_", isAirborne = true}, -- ZOCOMMissileSoldierSquad_Veteran
+	["D213112"] = {size = 4, needsRocketFix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_", bannerExperienceLvlString = "ZOCOMZoneRaiderGarrisonedExperienceLevel_", isAirborne = false}, -- ZOCOMZoneRaiderSquad
+	["8A6E8182"] = {size = 4, needsRocketFix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_", bannerExperienceLvlString = "ZOCOMZoneRaiderGarrisonedExperienceLevel_", isAirborne = false}, -- ZOCOMZoneRaiderSquad_Veteran
+	["AC645E3"] = {size = 6, needsRocketFix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_", bannerExperienceLvlString = "ZOCOMRifleSoldierGarrisonedExperienceLevel_", isAirborne = false}, -- ZOCOMRifleSoldierSquad
+	["A457A93"] = {size = 6, needsRocketFix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_", bannerExperienceLvlString = "ZOCOMRifleSoldierGarrisonedExperienceLevel_", isAirborne = true}, -- ZOCOMRifleSoldierSquad_Veteran
+	["C43CF79F"] = {size = 4, needsRocketFix = false, experienceLvlString = "ZOCOMGrenadeSoldierSquadExperienceLevel_", bannerExperienceLvlString = "ZOCOMGrenadeSoldierGarrisonedExperienceLevel_", isAirborne = false}, -- ZOCOMGrenadeSoldierSquad
+	["17A153BA"] = {size = 2, needsRocketFix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_", bannerExperienceLvlString = "ZOCOMMissileSoldierGarrisonedExperienceLevel_", isAirborne = false}, -- ZOCOMMissileSoldierSquad
+	["B0C5EE48"] = {size = 2, needsRocketFix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_", bannerExperienceLvlString = "ZOCOMMissileSoldierGarrisonedExperienceLevel_", isAirborne = true}, -- ZOCOMMissileSoldierSquad_Veteran
 	["B724E036"] = {size = 2, needsRocketFix = false, isAirborne = false}, -- ZOCOMSniperSquad
 	["5CE43D31"] = {size = 2, needsRocketFix = false, isAirborne = false}, -- ZOCOMSniperSquad_Veteran
 
 	-- SteelTalons
-	["CF35F1B4"] = {size = 6, needsRocketFix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_", isAirborne = false}, -- SteelTalonsRifleSoldierSquad
-	["B1D77E97"] = {size = 6, needsRocketFix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_", isAirborne = false}, -- SteelTalonsRifleSoldierSquad_Veteran
-	["FC6A915"] = {size = 4, needsRocketFix = false, experienceLvlString = "SteelTalonsGrenadeSoldierSquadExperienceLevel_", isAirborne = false}, -- SteelTalonsGrenadeSoldierSquad
-	["EA23C76F"] = {size = 2, needsRocketFix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_", isAirborne = false}, -- SteelTalonsMissileSoldierSquad
-	["4D8388BF"] = {size = 2, needsRocketFix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_", isAirborne = false}, -- SteelTalonsMissileSoldierSquad_Veteran
+	["CF35F1B4"] = {size = 6, needsRocketFix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_", bannerExperienceLvlString = "SteelTalonsRifleSoldierGarrisonedExperienceLevel_", isAirborne = false}, -- SteelTalonsRifleSoldierSquad
+	["B1D77E97"] = {size = 6, needsRocketFix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_", bannerExperienceLvlString = "SteelTalonsRifleSoldierGarrisonedExperienceLevel_", isAirborne = false}, -- SteelTalonsRifleSoldierSquad_Veteran
+	["FC6A915"] = {size = 4, needsRocketFix = false, experienceLvlString = "SteelTalonsGrenadeSoldierSquadExperienceLevel_", bannerExperienceLvlString = "SteelTalonsGrenadeSoldierGarrisonedExperienceLevel_", isAirborne = false}, -- SteelTalonsGrenadeSoldierSquad
+	["EA23C76F"] = {size = 2, needsRocketFix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_", bannerExperienceLvlString = "SteelTalonsMissileSoldierGarrisonedExperienceLevel_", isAirborne = false}, -- SteelTalonsMissileSoldierSquad
+	["4D8388BF"] = {size = 2, needsRocketFix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_", bannerExperienceLvlString = "SteelTalonsMissileSoldierGarrisonedExperienceLevel_", isAirborne = false}, -- SteelTalonsMissileSoldierSquad_Veteran
 	["C674C01"] = {size = 2, needsRocketFix = false, isAirborne = false}, -- SteelTalonsSniperSquad
 
 	-- vNod
@@ -3770,7 +3770,7 @@ squadSizeTable = {
 	["8274FA0E"] = {size = 6, needsRocketFix = false}, -- MarkedOfKaneTiberiumTrooperSquad
 
 	-- Mutant
-	["1AF4B91"] = {size = 6, needsRocketFix = false, experienceLvlString = "MutantMarauderSquadExperienceLevel_"} -- MutantMarauderSquad
+	["1AF4B91"] = {size = 6, needsRocketFix = false, experienceLvlString = "MutantMarauderSquadExperienceLevel_", bannerExperienceLvlString = "MutantMarauderGarrisonedExperienceLevel_"} -- MutantMarauderSquad
 
 }
 
@@ -3845,6 +3845,7 @@ end
 -- ############################# R25 Hammerhead Garrison fix ###################################
 
 function ApplyXPModifier(tableObj) 
+	if tableObj == nil then return end
 	--print("applying xp modifier")
 	local timesPromoted = tableObj.timesPromotedWithLua
 	local upgrades = {
@@ -3861,7 +3862,8 @@ end
 
 -- if the squad object promotes then the members and/or leader has officially caught up with the rank of it and therefore we should remove the scaler upgrades. Triggered by LEVELED
 function RemoveXPModifier(self)
-	local _,squad = GetSquadAttributes(self)
+	local squad = squadTables[getObjectId(self)]
+	if squad == nil then return end
 	if squad.squadLeader ~= nil then
 			local leader = squadMemberTable[squad.squadLeader]
 			if leader ~= nil and leader.timesPromotedWithLua > 0 then
@@ -3912,7 +3914,9 @@ end
 function GarrisonedInHammerhead(self)
 	--print("the squad has entered the hammerhead!")
 	-- toggle the squadLeader on here via upgrade
-	local objId,squad = GetSquadAttributes(self)
+	local objId = getObjectId(self)
+	local squad = squadTables[objId]
+	if squad == nil then return end
 	-- dpes not rank up automatically inside a hammerhead sadly.
 	if not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") end
 	HordeBroadcastEventToMembers(self, "SquadBannerEvent", tostring(objId))
@@ -3922,17 +3926,17 @@ function GarrisonedInHammerhead(self)
 	-- the banner carrier may not have registered yet, and squads without an
 	-- experienceLvlString entry cannot build the level string
 	local squadData = squadSizeTable[getObjectName(squad.selfRef)]
-	if squadLeader ~= nil and squadData ~= nil and squadData.experienceLvlString ~= nil then
+	if squadLeader ~= nil and squadData ~= nil and squadData.bannerExperienceLvlString ~= nil then
 		local squadLevel,_ = GetRankOfObject(squad.stringRef)
-		local squadLevelString = squadData.experienceLvlString .. tostring(squadLevel)
+		local bannerLevelString = squadData.bannerExperienceLvlString .. tostring(squadLevel)
 		local leaderLevel,_ = GetRankOfObject(squadLeader.stringRef)
 
-		--WriteToFile("leader rank hh.txt",  "Current leader rank: " .. tostring(leaderLevel) .. "\n" .. "squadLevel: " .. tostring(squadLevelString) .. "\n" .. "-------------------" .. "\n")
+		--WriteToFile("leader rank hh.txt",  "Current leader rank: " .. tostring(leaderLevel) .. "\n" .. "squadLevel: " .. tostring(bannerLevelString) .. "\n" .. "-------------------" .. "\n")
 
 		-- rank up leader here if its below the squad level
 		if applyHordeXPFix and leaderLevel < squadLevel then
 			-- if desync then its probably because of the prerequisites
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, squadLevelString)
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, bannerLevelString)
 			squadLeader.timesPromotedWithLua = (squadLevel-leaderLevel)
 			-- apply xp modifier to this unit and remove it when it reaches the squad level, if the squad object promotes check if a modifier exists and remove it.
 			ApplyXPModifier(squadLeader)
@@ -3942,7 +3946,10 @@ function GarrisonedInHammerhead(self)
 	-- this enables the fake weapon for the regular members
 	for squadMemberId,_ in squad.squadMembers do
 		-- grant RIDER1 status to every squad member to deny them from attacking while inside the hammerhead
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 41, 1)
+		local squadMember = squadMemberTable[squadMemberId]
+		if squadMember ~= nil then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMember.stringRef, 41, 1)
+		end
 	end
 end
 
@@ -3950,11 +3957,15 @@ end
 function GarrisonedInHammerheadEnd(self)
 	--print("the squad has exited the hammerhead!")
 	-- this disables the fake weapon for the regular members
-	local _,squad = GetSquadAttributes(self)
+	local squad = squadTables[getObjectId(self)]
+	if squad == nil then return end
 	-- instead of status i could just use upgrades instead
 	for squadMemberId,_ in squad.squadMembers do
 		-- remove RIDER1 status to either the riflemen squad or zone trooper squad 
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 41, 0)
+		local squadMember = squadMemberTable[squadMemberId]
+		if squadMember ~= nil then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMember.stringRef, 41, 0)
+		end
 	end
 	-- if banner carrier has higher rank than members, promote members to rank of banner carrier
 	-- all members may have died while garrisoned, and squads without an
@@ -3972,11 +3983,14 @@ function GarrisonedInHammerheadEnd(self)
 			-- print("promoting")
 			-- leader check
 			for objId,_ in squad.squadMembers do
-				-- if desync then its probably because of the prerequisites
-				ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, squadLevelString)
-				squadMemberTable[objId].timesPromotedWithLua = (squadLevel-memberLevel)
-				-- apply xp modifier to this unit and remove it when it reaches the squad level, if the squad object promotes check if a modifier exists and remove it.
-				ApplyXPModifier(squadMemberTable[objId])
+				local squadMember = squadMemberTable[objId]
+				if squadMember ~= nil then
+					-- if desync then its probably because of the prerequisites
+					ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMember.stringRef, squadLevelString)
+					squadMember.timesPromotedWithLua = (squadLevel-memberLevel)
+					-- apply xp modifier to this unit and remove it when it reaches the squad level, if the squad object promotes check if a modifier exists and remove it.
+					ApplyXPModifier(squadMember)
+				end
 			end
 		end
 	end
@@ -4035,6 +4049,7 @@ end
 -- string is the reference to the squad
 function GetSquadSize(self, string) 
 	local squad = squadTables[string] 
+	if squad == nil then return end
 	--ExecuteAction("NAMED_FLASH_WHITE", self, 3)
 	-- associate this squad member with the squad object
 	local objId,squadMember = GetSquadMemberAttributes(self)
@@ -4047,6 +4062,7 @@ end
 function GetSquadLeader(self, string)
 	-- set the squads leader
 	local squad = squadTables[string] 
+	if squad == nil then return end
 	local objId,squadMember = GetSquadMemberAttributes(self)
 	squad.squadLeader = getObjectId(self)
 	squadMember.isLeader = true
@@ -4062,21 +4078,21 @@ function OnSquadExitRax_R24(self, isHealed)
 	local squadData = squadSizeTable[getObjectName(squad.selfRef)]
 	local squadSize = getTableSize(squad.squadMembers)
 	-- used for hammerhead garrisoned squads that can fire over structures
-	if squadSize == 0 then return end
+	if squadData == nil or squadSize == 0 then return end
 	squad.spawnedSize = squadSize
 	--if isHealed then print("has come out of the armory!") end
 	if strfind(tostring(ObjectTeamName(self)), "Player_") ~= nil and not isHealed and not squadData.isAirborne and not ObjectTestModelCondition(self, "USER_10") then 
 		--print("checking for squad exploit!")
-		isSquadExploit(squad)  
+		isSquadExploit(squad, squadData)
 	end
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 end
 
-function isSquadExploit(squad)
-	if squad == nil then return end
+function isSquadExploit(squad, squadData)
+	if squad == nil or squadData == nil then return end
 	-- compare squad size to the full squad size (obtained via squadSizeTable)
 	-- 5 - 2 = 3 
-	-- WriteToFile("isExploit.txt",  "spawnedSize: " .. tostring(squad.spawnedSize) .. " " .. " " .. tostring(squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLostOnSpawn)) .. "\n")
+	-- WriteToFile("isExploit.txt",  "spawnedSize: " .. tostring(squad.spawnedSize) .. " " .. " " .. tostring(squadData.size-getTableSize(squad.unitsLostOnSpawn)) .. "\n")
 	local unitsLostSize = getTableSize(squad.unitsLostOnSpawn)
 	
 	local keys = {}
@@ -4088,7 +4104,7 @@ function isSquadExploit(squad)
 		squad.unitsLostOnSpawn[keys[i]] = nil
 	end
 
-	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))].size-unitsLostSize then 
+	if squad.spawnedSize < squadData.size-unitsLostSize then
 		--print("squad exploit detected!")
 		ExecuteAction("NAMED_DELETE", squad.selfRef)
 	end
@@ -4097,13 +4113,17 @@ end
 -- horde member killed while leaving barracks -> broadcast an event to squads and decrement the squadSize by 1 
 -- self is squad , other is the member that died
 function KilledOutOfBarracks(self, other)
-	local _,squad = GetSquadAttributes(self)
+	local squad = squadTables[getObjectId(self)]
+	if squad == nil then return end
 	squad.unitsLostOnSpawn[getObjectId(other)] = true
 end
 
 -- grants as many upgrades to the squadLeader as there are squadMembers (obtained by getTableSize) for enabling weapons
 -- if removeUpgrade is true - check if the default upgrade is true and remove it 
 function GrantUpgradesToLeader(squad)
+	if squad == nil then return end
+	local squadData = squadSizeTable[getObjectName(squad.selfRef)]
+	if squadData == nil then return end
 	local squadSize = getTableSize(squad.squadMembers)
 	local squadLeader = squadMemberTable[squad.squadLeader] or nil
 	--if removeUpgrade then print(tostring(squadLeader)) end
@@ -4113,7 +4133,7 @@ function GrantUpgradesToLeader(squad)
 	-- check if WEAPON_UPGRADED_01 is current status to assign the appropriate upgrade (this is for AP Ammo and Scanner Packs)
 	local upgradeString = EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef , 124) and "Upgrade_SquadMemberEnhanced" or "Upgrade_SquadMember"
 	--print(upgradeString)
-	local isZoneRaiderSquad = squadSizeTable[getObjectName(squad.selfRef)].needsRocketFix
+	local isZoneRaiderSquad = squadData.needsRocketFix
 	for i = 1, squadSize, 1 do
 		local upgradeString = upgradeString .. i
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, upgradeString) then ObjectGrantUpgrade(squadLeader.selfRef, upgradeString) end
@@ -4128,8 +4148,12 @@ end
 -- triggered by +RIDER4 +WEAPON_UPGRADED_01, removes the Upgrade_SquadMember upgrades from members of squad, event fires on banner carrier
 function SquadHasBeenUpgraded(self)
 	--print("unit upgraded")
-	local _,squadMember = GetSquadMemberAttributes(self)
-	GrantUpgradesToLeader(squadTables[squadMember.squadObject])
+	local squadMember = squadMemberTable[getObjectId(self)]
+	if squadMember == nil then return end
+	if squadMember.squadObject == nil then return end
+	local squad = squadTables[squadMember.squadObject]
+	if squad == nil then return end
+	GrantUpgradesToLeader(squad)
 end
 
 function OnSquadDestroyed_R24(self)
@@ -4141,7 +4165,7 @@ end
 
 -- when a member dies clear it up here, Triggered by +DESTROYED
 function OnMemberDestroyed_R24(self)
-	local objId,squadMember = GetSquadMemberAttributes(self)
+	local objId = getObjectId(self)
 	-- was the unit moving to rally point while it was destroyed?
 	--print("member killed!")
 	--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squadMember.stringRef , 90) then
@@ -4150,6 +4174,8 @@ function OnMemberDestroyed_R24(self)
 		-- broadcast an event to squads that are also with the IS_MOVING_TO_RALLY_POINT object status
 		ObjectBroadcastEventToAllies(self,"MemberKilledOnBuilt", 50)
 	end
+	local squadMember = squadMemberTable[objId]
+	if squadMember == nil then return end
 	-- clean up here
 	squadMemberTable[objId] = nil
 	--if squadMember.squadObject == nil then print("squad object is nil") end
