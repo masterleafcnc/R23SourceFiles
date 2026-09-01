@@ -3790,13 +3790,17 @@ end
 -- triggered by +UNPACKING 
 function OnMCVUnpacking(self)
 	local stringRef = SetObjectReference(self)
-	if not EvaluateCondition("UNIT_HAS_UPGRADE",stringRef, "Upgrade_MCVLocomotorUpgrade") then ObjectGrantUpgrade(self, "Upgrade_MCVLocomotorUpgrade") end
+	if EvaluateCondition("NAMED_NOT_DESTROYED", stringRef) then
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",stringRef, "Upgrade_MCVLocomotorUpgrade") then ObjectGrantUpgrade(self, "Upgrade_MCVLocomotorUpgrade") end
+	end
 end
 
 -- triggered by -UNPACKING 
 function OnMCVUnpackingEnd(self)
 	local stringRef = SetObjectReference(self)
-	if EvaluateCondition("UNIT_HAS_UPGRADE",stringRef, "Upgrade_MCVLocomotorUpgrade") then ObjectRemoveUpgrade(self, "Upgrade_MCVLocomotorUpgrade") end
+	if EvaluateCondition("NAMED_NOT_DESTROYED", stringRef) then
+		if EvaluateCondition("UNIT_HAS_UPGRADE",stringRef, "Upgrade_MCVLocomotorUpgrade") then ObjectRemoveUpgrade(self, "Upgrade_MCVLocomotorUpgrade") end
+	end
 end
 
 -- ############################# R25 Helper Functions ###################################
