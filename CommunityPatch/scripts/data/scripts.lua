@@ -1462,7 +1462,6 @@ function CheckForObjReverseBugging(self, frameDiff)
 	group.fixCancelled = group.fixCancelled or false
 	group.fixCancelledByType = group.fixCancelledByType or {}
 	group.firstTurnFrameCountByType = group.firstTurnFrameCountByType or {}
-	group.thirdTurnFrameCountByType = group.thirdTurnFrameCountByType or {}
 	group.expectedChecks = group.expectedChecks or 0
 	group.unitsNotMovingBeforeBackingUp = group.unitsNotMovingBeforeBackingUp or 0
 	group.thirdTurnCountChecked = group.thirdTurnCountChecked or false
@@ -1690,21 +1689,6 @@ function BackingUpFastTurnEnd(self)
 		CheckForObjReverseBugging(self, frameDiff)
 	end
 
-	if unitReversing.timesTriggeredFast == 2 then
-		--WriteToFile("backingupfastend2.txt",  "object went this long with 2 trigger: " .. tostring(frameDiff) .. "\n")	
-		if group ~= nil then
-			-- objName is the type of unit such as Scorpion Tank, Raider Buggy, Seeker Tank
-			group.thirdTurnFrameCountByType = group.thirdTurnFrameCountByType or {}
-			--group.thirdTurnUnitCountByType = group.thirdTurnUnitCountByType or {}
-			-- store the frame diff of this unit to be removed from the calculation if found to be bugging on first threshold pass, set this in FixBuggingUnit function
-			if group.thirdTurnFrameCountByType[objName] == nil then
-				group.thirdTurnFrameCountByType[objName] = {}
-			end
-			-- clear this to prevent desync
-			group.thirdTurnFrameCountByType[objName][unitId] = frameDiff
-		end		
-	end
-
 	unitReversing.timesTriggeredFast = unitReversing.timesTriggeredFast + 1
 end	
 
@@ -1802,10 +1786,6 @@ function FixBuggingUnit(self, applySpeedBuff)
 		local firstTurnFrameCountForType = group.firstTurnFrameCountByType and group.firstTurnFrameCountByType[objName]
 		if firstTurnFrameCountForType ~= nil and firstTurnFrameCountForType[a] ~= nil then
 			firstTurnFrameCountForType[a] = nil
-		end
-		local thirdTurnFrameCountForType = group.thirdTurnFrameCountByType and group.thirdTurnFrameCountByType[objName]
-		if thirdTurnFrameCountForType ~= nil and thirdTurnFrameCountForType[a] ~= nil then
-			thirdTurnFrameCountForType[a] = nil
 		end
 	end
 
