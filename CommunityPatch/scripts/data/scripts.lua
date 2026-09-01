@@ -3387,35 +3387,41 @@ function MakeSonicEmitterTempImmune(self)
 	-- GiveExperiencePointsToKiller(self)
 end
 
+-- Triggered by USER_6, avoids repeated ObjectTestModelCondition calls when damaged.
+function SonicEmitterSecondLife(self)
+	local sonic = GetSonicEmitterAttributes(self)
+	if sonic.damagedFlag then return end
+	-- this is safety incase this triggers more than once
+	sonic.damagedFlag = true
+	-- print("USER 6")
+	-- sonic emitter receives this event dispatched by the damager, should work with stealth units as the killer wouldnt have restealthed by then
+	-- enemies dispatch this event to the sonic emitter to find out if any of them killed it 
+	ObjectBroadcastEventToEnemies(sonic.lastUnit, "IsItAnEnemyEvent", 99999) 
+	-- this ensures that the Recycler doesnt give enemy hexapods resources if this unit was killed by friendly fire 
+	if sonic.killedByEnemy then
+		-- if self is shatterer/zone shatterer award xp
+		local bountyWeapon = "EmitterBounty"
+		if not sonic.sonicEmitterType then
+			-- print("is a shatterer or zone shatterer")
+			-- print("awarding shatterer xp award")
+			if not sonic.hasGivenXP then
+				GiveExperiencePointsToKiller(self)
+			end
+			bountyWeapon = "ShatBounty"
+		end
+		-- only enemy EradicatorHexapods receive this broadcast and rewards each of them.
+		ObjectBroadcastEventToEnemies(self, "EradicatorHexapodEvent", 450, bountyWeapon) 
+	end	
+	MakeSonicEmitterTempImmune(self)
+end
+
 -- objet that damaged this dispatches an event to the sonic emitter 
 function SonicEmitterDamaged(self, other)
 	-- if other == nil then return end
 	local sonic = GetSonicEmitterAttributes(self)
-	if not sonic.damagedFlag and ObjectTestModelCondition(self, "USER_6") then
+	if sonic.lastUnit ~= other and not sonic.damagedFlag then
 		-- assigns the last unit to have attacked this unit here
 		sonic.lastUnit = other
-		-- this is safety incase this triggers more than once
-		sonic.damagedFlag = true
-		-- print("USER 6")
-		-- sonic emitter receives this event dispatched by the damager, should work with stealth units as the killer wouldnt have restealthed by then
-		-- enemies dispatch this event to the sonic emitter to find out if any of them killed it 
-		ObjectBroadcastEventToEnemies(other, "IsItAnEnemyEvent", 99999) 
-		-- this ensures that the Recycler doesnt give enemy hexapods resources if this unit was killed by friendly fire 
-		if sonic.killedByEnemy then
-			-- if self is shatterer/zone shatterer award xp
-			local bountyWeapon = "EmitterBounty"
-			if not sonic.sonicEmitterType then
-				-- print("is a shatterer or zone shatterer")
-				-- print("awarding shatterer xp award")
-				if not sonic.hasGivenXP then
-					GiveExperiencePointsToKiller(self)
-				end
-				bountyWeapon = "ShatBounty"
-			end
-			-- only enemy EradicatorHexapods receive this broadcast and rewards each of them.
-			ObjectBroadcastEventToEnemies(self, "EradicatorHexapodEvent", 450, bountyWeapon) 
-		end	
-		MakeSonicEmitterTempImmune(self)
 	end
 end
 

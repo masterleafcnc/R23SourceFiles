@@ -1109,6 +1109,7 @@
 
 	  <EventList Name="TerraformingStationFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnDamaged" ScriptFunctionName="SonicEmitterDamaged" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser6" ScriptFunctionName="SonicEmitterSecondLife" DebugSingleStep="false"/>
 		<EventHandler EventName="IsItAnEnemyEvent" ScriptFunctionName="DetermineIfEnemyKilledMe" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed" ScriptFunctionName="SonicOndeath" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser4End" ScriptFunctionName="kill" DebugSingleStep="false"/>
@@ -1120,6 +1121,7 @@
 
 	 <EventList Name="GDISonicTankFunctions_R24" Inherit="BaseScriptFunctions">
   		<EventHandler EventName="OnDamaged" ScriptFunctionName="SonicEmitterDamaged" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser6" ScriptFunctionName="SonicEmitterSecondLife" DebugSingleStep="false"/>
 		<EventHandler EventName="IsItAnEnemyEvent" ScriptFunctionName="DetermineIfEnemyKilledMe" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed" ScriptFunctionName="ShattererOndeath" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser4End" ScriptFunctionName="kill" DebugSingleStep="false"/>
