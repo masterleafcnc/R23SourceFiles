@@ -482,7 +482,7 @@
 					StatusBitFlags=""
 					RejectStatusBitFlags=""
 					AcceptModelCondition=""
-					RejectModelCondition="RIDER3">
+					RejectModelCondition="">
 					<IncludeThing>NODCyborgInfantry</IncludeThing>
 					<IncludeThing>MarkedOfKaneImprovedCyborgInfantry</IncludeThing>
 					<IncludeThing>MOKCyborgInfantry</IncludeThing>
