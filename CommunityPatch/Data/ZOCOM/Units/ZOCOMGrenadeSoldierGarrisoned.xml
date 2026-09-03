@@ -347,13 +347,6 @@
 					Type="INITIAL"
 					List="" />
 			</SlowDeath>
-			<SuppressionUpdate
-				id="ModuleTag_SuppressionUpdate"
-				UpdateDelay="1s"
-				Suppressability="1000"
-				SuppressionDuration="5s"
-				AttributeModifierSuppressed="Modifier_Test_Suppression"
-				AttributeModifierForceMove="Modifier_Test_Suppression_ForceMove" />
 			<ModelConditionUpgrade xmlns="uri:ea.com:eala:asset"
 											 id="ModuleTag_FieldSuitsModelCondition"
 											 Permanent="true"
@@ -379,10 +372,6 @@
 	<FXOffset x="25" y="0" z="0"></FXOffset>
 </CreateAndEnterObjectSpecialPower>
 
-			<FindCoverBehavior
-				id="ModuleTag_FCB"
-				CoverScanRange="10.0"
-				AttributeModifierInCover="Modifier_Cover" />
 			<LargeGroupAudioUpdate
 				id="LGAU">
 				<Key>GDI_GrenadierSoldier</Key>
