@@ -4931,6 +4931,23 @@
 					<ExcludeThing>TiberiumFieldSeeded</ExcludeThing>
 					<ExcludeThing>AlienWormhole</ExcludeThing>
 					<ExcludeThing>AlienCrystalShield</ExcludeThing>
+					<!-- exclude motherships from this one -->
+					<ExcludeThing>AlienMothership</ExcludeThing>
+					<ExcludeThing>Reaper17Mothership</ExcludeThing>
+					<ExcludeThing>Traveler59Mothership</ExcludeThing>
+				</SpecialObjectFilter>
+			</AttributeModifierNugget>
+
+			<!-- for the mothership only -->
+			<AttributeModifierNugget
+				Radius="100"
+				PartitionFilterTestType="SPHERE"
+				AttributeModifierName="AttributeModifier_AlienCrystalShield">
+				<SpecialObjectFilter
+					Rule="NONE">
+					<IncludeThing>AlienMothership</IncludeThing>
+					<IncludeThing>Reaper17Mothership</IncludeThing>
+					<IncludeThing>Traveler59Mothership</IncludeThing>
 				</SpecialObjectFilter>
 			</AttributeModifierNugget>
 		</Nuggets>
