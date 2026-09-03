@@ -3471,19 +3471,30 @@ function GiveExperiencePointsToKiller(self)
 		-- the squad horde object may already be gone while a surviving member landed the kill
 		if squad == nil then return end
 		--print("granting xp to squad")
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squad.stringRef, xpReward)
+		if EvaluateCondition("NAMED_NOT_DESTROYED", squad.stringRef) then
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squad.stringRef, xpReward)
+		end
 		--WriteToFile("xpsquad.txt",  "squad object: " .. tostring(squad) .. "\n")
 		-- and to all members
 		for squadMemberId,_ in squad.squadMembers do
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squadMemberTable[squadMemberId].stringRef, xpReward)
+			local memberRef = squadMemberTable[squadMemberId].stringRef
+			if memberRef ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", memberRef) then
+				ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", memberRef, xpReward)
+			end
 		end
 		-- the banner carrier is not part of squadMembers, award it separately
 		if squad.squadLeader ~= nil and squadMemberTable[squad.squadLeader] ~= nil then
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squadMemberTable[squad.squadLeader].stringRef, xpReward)
+			local leaderRef = squadMemberTable[squad.squadLeader].stringRef
+			if leaderRef ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", leaderRef) then
+				ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", leaderRef, xpReward)
+			end
 		end
 	else
 		-- for non squads , to avoid recreating references for the same unit im going to make the id of the ref the object reference
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", SetObjectReference(lastUnit), xpReward)
+		local lastUnitRef = SetObjectReference(lastUnit)
+		if EvaluateCondition("NAMED_NOT_DESTROYED", lastUnitRef) then
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", lastUnitRef, xpReward)
+		end
 	end
 
 	sonic.hasGivenXP = true
