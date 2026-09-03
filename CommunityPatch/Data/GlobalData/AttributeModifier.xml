@@ -17,7 +17,7 @@
 	<AttributeModifier
 		id="Modifier_SetUser3State"
 		Category="NONE"
-		Duration="3s"
+		Duration="6s"
 		ModelConditionsSet="USER_3">
 	</AttributeModifier>
 
