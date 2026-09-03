@@ -3336,6 +3336,7 @@ function MakeSonicEmitterTempImmune(self)
 	local sonic = GetSonicEmitterAttributes(self)
 	sonic.initialSetFrame = GetFrame()
 	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT), only for Sonic Emitters.
+	local isZoneShatterer = false
 	if sonic.sonicEmitterType then
 		ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
 		-- if the sonic emitter has been sold off
@@ -3356,6 +3357,7 @@ function MakeSonicEmitterTempImmune(self)
 	else 
 		if strfind(getObjectName(self), "AE73138F") ~= nil then
 			-- spawn zone shatterer rubble
+			isZoneShatterer = true
 			if not sonic.enableNormalDeathMode then
 				ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedImprovedSonicTank")
 			else 
@@ -3373,7 +3375,9 @@ function MakeSonicEmitterTempImmune(self)
 		end
 	end
 
-	if not (ObjectTestModelCondition(self, "FIRING_A") or ObjectTestModelCondition(self, "USER_3")) then kill(self) end
+	if not (ObjectTestModelCondition(self, "FIRING_OR_PREATTACK_A") or (isZoneShatterer and ObjectTestModelCondition(self, "USER_3"))) 
+		then kill(self) 
+	end
 	--print("second life!")
 
 	-- this doesnt work after switching teams

@@ -11,7 +11,14 @@
 		id="Modifier_SetStunnedStates"
 		Category="NONE"
 		Duration="6s"
-		ModelConditionsSet="AFFECTED_BY_EMP USER_3">
+		ModelConditionsSet="AFFECTED_BY_EMP">
+	</AttributeModifier>
+
+	<AttributeModifier
+		id="Modifier_SetUser3State"
+		Category="NONE"
+		Duration="6s"
+		ModelConditionsSet="USER_3">
 	</AttributeModifier>
 
 	<AttributeModifier
