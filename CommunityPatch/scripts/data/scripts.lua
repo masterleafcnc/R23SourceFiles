@@ -420,22 +420,26 @@ end
 function GetHarvesterData(self)
 	if self ~= nil then
 		local a = getObjectId(self)
-		harvesterData[a] = harvesterData[a] or {
-			totalFramesHarvested75Full = 0, -- total number of frames harvested since becoming >= 75% full of tiberium
-			frameOnHarvest75 = 0, -- the frame since becoming >= 75% full of tiberium
-			isHarvestingBlue = false, -- is harvesting blue tiberium or not
-			isAlreadyHarvesting = false, -- the harvester is already harvesting
-			lastCrystalHarvested = nil, -- object reference to the last crystal harvested
-			harvbluetib = 0, -- for counting blue tiberium in harvester
-			harvgreentib = 0, -- for counting green tiberium in harvester
-			harvesterObjectRef = SetObjectReference(self), -- set the object reference once instead of relying on GetRandomNumber()
-			-- 1 is green tiberium 0 is for blue
-			bar1 = nil, -- for tracking the bar one of the harvester
-			bar2 = nil, -- for tracking the bar two of the harvester
-			bar3 = nil, -- for tracking the bar three of the harvester
-			bar4 = nil -- for tracking the bar four of the harvester
-		}
-		return a, harvesterData[a]
+		local harvData = harvesterData[a]
+		if harvData == nil then 
+			harvData = {
+				totalFramesHarvested75Full = 0, -- total number of frames harvested since becoming >= 75% full of tiberium
+				frameOnHarvest75 = 0, -- the frame since becoming >= 75% full of tiberium
+				isHarvestingBlue = false, -- is harvesting blue tiberium or not
+				isAlreadyHarvesting = false, -- the harvester is already harvesting
+				lastCrystalHarvested = nil, -- object reference to the last crystal harvested
+				harvbluetib = 0, -- for counting blue tiberium in harvester
+				harvgreentib = 0, -- for counting green tiberium in harvester
+				harvesterObjectRef = SetObjectReference(self), -- set the object reference once instead of relying on GetRandomNumber()
+				-- 1 is green tiberium 0 is for blue
+				bar1 = nil, -- for tracking the bar one of the harvester
+				bar2 = nil, -- for tracking the bar two of the harvester
+				bar3 = nil, -- for tracking the bar three of the harvester
+				bar4 = nil -- for tracking the bar four of the harvester
+			}
+			harvesterData[a] = harvData
+		end
+		return a, harvData
 	end
 
 	return nil, nil
@@ -776,16 +780,20 @@ end
 function GetCrystalData(self)
 	if self ~= nil then 
 		local a = getObjectId(self)
-		crystalData[a] = crystalData[a] or {
-			firstHarvestedFrame = 0, -- the frame where the crystal begins to be harvested 
-			lastHarvestedFrame = nil, -- the frame where the crystal finishes being harvested
-			framesBeingHarvested = 0, -- the amount of frames the crystal has been harvested
-			crystalHasBeenReset = false, -- the crystal has undergone a reset
-			dontKillCrystal = false, -- flag to prevent the crystal from being killed with NAMED_KILL
-			beingHarvestedBy = nil, -- harvester thats currently harvesting this crystal
-			crystalObjectRef = SetObjectReference(self) -- set the object reference once instead of relying on GetRandomNumber()
-		}
-		return a, crystalData[a]
+		local crystal = crystalData[a]
+		if crystal == nil then
+			crystal = {
+				firstHarvestedFrame = 0, -- the frame where the crystal begins to be harvested 
+				lastHarvestedFrame = nil, -- the frame where the crystal finishes being harvested
+				framesBeingHarvested = 0, -- the amount of frames the crystal has been harvested
+				crystalHasBeenReset = false, -- the crystal has undergone a reset
+				dontKillCrystal = false, -- flag to prevent the crystal from being killed with NAMED_KILL
+				beingHarvestedBy = nil, -- harvester thats currently harvesting this crystal
+				crystalObjectRef = SetObjectReference(self) -- set the object reference once instead of relying on GetRandomNumber()
+			}
+			crystalData[a] = crystal
+		end
+		return a, crystal
 	end
 
 	return nil, nil
