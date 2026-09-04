@@ -1799,7 +1799,7 @@
 				CanPathThroughUnitsWhileDocking="True"
 				CanPathThroughUnitsWhileHarvesting="True"
 				FlyOffMap="REVERSE_DIRECTION"
-				DelayAFterLoadingOrUnloading="0.50s"
+				DelayAFterLoadingOrUnloading="0s"
 				FlyOffMapOnUnload="False">
 				<UnitAITargetChooserData
 					IdleScanDelay="0.8s"

@@ -1301,7 +1301,7 @@
 			
 		TakeOffAndLandingSpeed="7.5"
 		TakeOffAndLandingSlowDownDelta="25.0"
-		TakeOffAndLandingSlowDownTime="1.0s"
+		TakeOffAndLandingSlowDownTime="0.75s"
 
 		RudderCorrectionDegree="0.169"
 		RudderCorrectionRate="0.027"
@@ -1349,7 +1349,7 @@
 		ClampOrientationToPathTangent="true"
 		ReorientIfTurnTooSharp="true"
 		/>	
-		
+		<!--
 	<LocomotorTemplate
 		id="GDIHammerheadLocomotor"
 		Name="GDIHammerheadLocomotor"
@@ -1388,7 +1388,7 @@
 		ElevatorCorrectionRate="0.016"
 		CanMoveBackward="false"		
 		/>		
-
+-->
 	<LocomotorTemplate
 		id="FirehawkLocomotor"
 		Name="FirehawkLocomotor"
