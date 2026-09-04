@@ -3523,13 +3523,17 @@ end
 
 function GetragedUnitProperties(self) 
 	local objId = getObjectId(self)
-	ragedUnits[objId] = ragedUnits[objId] or {
-		timesRaged = 0,
-		stringRef = SetObjectReference(self),
-		selfRef = self, 
-		dummyObjects = {}
-	}
-	return objId, ragedUnits[objId]
+	local ragedUnit = ragedUnits[objId]
+	if ragedUnit == nil then
+		ragedUnit = {
+			timesRaged = 0,
+			stringRef = SetObjectReference(self),
+			selfRef = self,
+			dummyObjects = {}
+		}
+		ragedUnits[objId] = ragedUnit
+	end
+	return objId, ragedUnit
 end
 
 -- maybe the dummy object could dispatch the lua event that way there will be a relationship between the dummy object and objects raged. when the dummy expires it should decrement the timesRaged property of the units it established a relationship with.
@@ -3605,13 +3609,17 @@ end
 
 function GetPhasedUnitProperties(self) 
 	local objId = getObjectId(self)
-	phasedUnits[objId] = phasedUnits[objId] or {
-		timesPhased = 0,
-		stringRef = SetObjectReference(self),
-		selfRef = self, 
-		dummyObjects = {}
-	}
-	return objId, phasedUnits[objId]
+	local phasedUnit = phasedUnits[objId]
+	if phasedUnit == nil then
+		phasedUnit = {
+			timesPhased = 0,
+			stringRef = SetObjectReference(self),
+			selfRef = self,
+			dummyObjects = {}
+		}
+		phasedUnits[objId] = phasedUnit
+	end
+	return objId, phasedUnit
 end
 
 -- maybe the dummy object could dispatch the lua event that way there will be a relationship between the dummy object and objects phased. when the dummy expires it should decrement the timesPhased property of the units it established a relationship with.
@@ -4006,31 +4014,39 @@ end
 
 function GetSquadAttributes(self)
 	local objId = getObjectId(self)
-	squadTables[objId] = squadTables[objId] or {
-		--squadSize = 0
-		squadMembers = {},
-		squadLeader = nil,
-		stringRef = SetObjectReference(self),
-		selfRef = self,
-		spawnedSize = 0,
-		lastPromotedRank = 1,
-		lastPromotedFrame = 0,
-		unitsLostOnSpawn = {}, -- units lost while coming out of the barracks
-		confessorDisciple = nil -- on -INSIDE_GARRISON this object also gets the upgrade that grants that removed.
-	}
-	return objId, squadTables[objId]
+	local squad = squadTables[objId]
+	if squad == nil then
+		squad = {
+			--squadSize = 0
+			squadMembers = {},
+			squadLeader = nil,
+			stringRef = SetObjectReference(self),
+			selfRef = self,
+			spawnedSize = 0,
+			lastPromotedRank = 1,
+			lastPromotedFrame = 0,
+			unitsLostOnSpawn = {}, -- units lost while coming out of the barracks
+			confessorDisciple = nil -- on -INSIDE_GARRISON this object also gets the upgrade that grants that removed.
+		}
+		squadTables[objId] = squad
+	end
+	return objId, squad
 end
 
 function GetSquadMemberAttributes(self)
 	local objId = getObjectId(self)
-	squadMemberTable[objId] = squadMemberTable[objId] or {
-		squadObject = nil,
-		selfRef = self,
-		stringRef = SetObjectReference(self),
-		isLeader = false, 
-		timesPromotedWithLua = 0
-	}
-	return objId, squadMemberTable[objId]
+	local squadMember = squadMemberTable[objId]
+	if squadMember == nil then
+		squadMember = {
+			squadObject = nil,
+			selfRef = self,
+			stringRef = SetObjectReference(self),
+			isLeader = false,
+			timesPromotedWithLua = 0
+		}
+		squadMemberTable[objId] = squadMember
+	end
+	return objId, squadMember
 end
 
 -- self is the squad member, broadcasting events to horde members doesnt pass the reference of the horde object
