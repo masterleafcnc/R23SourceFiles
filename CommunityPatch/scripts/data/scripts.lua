@@ -131,6 +131,7 @@ function IsGroupEmpty(group)
 end
 
 function resetTeamTable(teamTable)
+	 -- Relying only on Lua garbage collection causes multiplayer desyncs.
     clearSubTables(teamTable)
 
     teamTable.units = {}
@@ -1121,28 +1122,22 @@ end
 -- ####################### REVERSE MOVE WORKAROUND ############################
 
 function GetUnitReversingData(self)
-	if self ~= nil then
-		local a = getObjectId(self)
-
-		-- check if this object is a harvester that can reverse move, returns true if so, else false.
-		local checkHarv = function()
-			local objectName = getObjectName(%self) 
-			local harvesters = {	
-				["3A3D109A"] = true,
-				["C3785BFE"] = true,
-				["21661DFB"] = true,
-				["D258354"] = true,
-				["F52AEEDF"] = true,
-				["C23B3A15"] = true
-			}
-
-			if harvesters[objectName] then
-				return true
-			end
-			return false
-		end
-
-		unitsReversing[a] = unitsReversing[a] or {
+	if self == nil then
+		return nil, nil
+	end
+	local a = getObjectId(self)
+	local unitReversing = unitsReversing[a]
+	
+	if unitReversing == nil then
+		local harvesters = {
+			["3A3D109A"] = true,
+			["C3785BFE"] = true,
+			["21661DFB"] = true,
+			["D258354"] = true,
+			["F52AEEDF"] = true,
+			["C23B3A15"] = true
+		}
+		unitReversing = {
 			firstFrame = 0, -- first frame after reversing while turning fast
 			isReverseMoving = false, -- flag to stop the re-assignment of firstFrame
 			timesTriggeredFast = 0, 
@@ -1165,11 +1160,11 @@ function GetUnitReversingData(self)
 			lastFrameMoveEnd = 0,
 			--isBeingFollowed = false,
 			beingFollowedBy = {},
-			isReverseMoveHarvester = checkHarv()
+			isReverseMoveHarvester = harvesters[getObjectName(self)] == true
 		}
-		return a, unitsReversing[a]
+		unitsReversing[a] = unitReversing 
 	end
-	return nil, nil
+	return a, unitReversing
 end
 
 -- Sets the initial frame when a unit fast turns while backing up, triggered by +BACKING_UP +TURN_LEFT_HIGH_SPEED
@@ -1321,6 +1316,7 @@ end
 function GettingOutOfTheWayEvent(self, other)
 	local selfId,unitReversingSelf = GetUnitReversingData(self)
 	local otherId,unitReversingOther = GetUnitReversingData(other)
+	if unitReversingSelf == nil or unitReversingOther == nil then return end
 	-- the object id of the unit matches the unit that broadcasted this event, concluding that a collision took place between that unit and the other.
 	if unitReversingSelf.unitAnchor ~= nil then
 		--WriteToFile("unitAnchor.txt",  tostring(unitReversingSelf.unitAnchor) .. "  " .. tostring(selfId) .. "\n")
@@ -1939,7 +1935,7 @@ end
 function OptimizedUnitAnchor(self, other)
 	local selfId, unitReversingSelf = GetUnitReversingData(self)
 	local otherId, unitReversingOther = GetUnitReversingData(other)
-
+	if unitReversingSelf == nil or unitReversingOther == nil then return end
 	-- if one of the two units is a harvester dont override the random anchor.
 	if unitReversingSelf.isReverseMoveHarvester == unitReversingOther.isReverseMoveHarvester then
 		if unitReversingSelf.groupId == unitReversingOther.groupId then
@@ -2174,6 +2170,7 @@ function GroupUnitOnDeath(self)
 				SetUnitAnchor(follower.selfReference, nil)
 			end
         end
+		 -- Relying only on Lua garbage collection causes multiplayer desyncs.
 		clearSubTables(unitReversing.beingFollowedBy)
   	end
 	RemoveFromUnitSelection(self)
@@ -3267,33 +3264,30 @@ sonicEmitterTable = {}
 
 function GetSonicEmitterAttributes(self)
 
-	local isSonicEmitter = function()
-		local objectName = getObjectName(%self) 
-		local sonicEmitters = {	
-			["CD0835A6"] = true, -- GDITerraformingStation
-			["89DA349"] = true, -- ZOCOMTerraformingStation
-		}
-		if sonicEmitters[objectName] then
-			return true
-		end
+	local objId = getObjectId(self)
+	local sonic = sonicEmitterTable[objId]
 
-		return false
+	if sonic == nil then 
+		local sonicEmitterTypes = {
+			["CD0835A6"] = true,
+			["89DA349"] = true
+		}
+		sonic = {
+			lastUnit = nil,
+			selfId = objId,
+			damagedFlag = false,
+			sonicEmitterType = sonicEmitterTypes[getObjectName(self)] == true, -- returns true if its a sonic emitter, else false
+			initialSetFrame = GetFrame(),
+			selfRef = self,
+			killedByEnemy = false,
+			hasGivenXP = false,
+			stringRef = SetObjectReference(self),
+			enableNormalDeathMode = false 
+		}
+		sonicEmitterTable[objId] = sonic
 	end
 
-	local ObjID = getObjectId(self)
-	sonicEmitterTable[ObjID] = sonicEmitterTable[ObjID] or {
-		lastUnit = nil,
-		selfId = ObjID,
-		damagedFlag = false,
-		sonicEmitterType = isSonicEmitter(), -- returns true if its a sonic emitter, else false
-		initialSetFrame = GetFrame(),
-		selfRef = self,
-		killedByEnemy = false,
-		hasGivenXP = false,
-		stringRef = SetObjectReference(self),
-		enableNormalDeathMode = false
-	}
-	return sonicEmitterTable[ObjID]
+	return sonic
 end
 
 function EnableNormalDeathMode(self)
