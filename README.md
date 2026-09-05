@@ -369,3 +369,5 @@ Applies to：
 ## Neutral
 
 * Viceroid veterancy added.
+
+### [View all patch notes here](https://docs.google.com/document/d/1LMfH_2jcBjOpHu4E0ZB7yAgqojlhO2nA55yLw-DXzMM/edit?tab=t.0)
