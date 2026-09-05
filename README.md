@@ -8,6 +8,17 @@ This cannot be compiled as a standalone mod as it does not contain all of the 1.
   <img src="./CommunityPatch/images/R25.png" style="width: 50%;" alt="R25">
 </p>
 
+# R25i Changelog
+
+* Fixed an issue causing the Zone Shatterers’ Overload Beam to be cancelled if the unit was destroyed at the same time as firing. [Video Link](https://youtu.be/ebnZMcJlfaE)
+* Fixed a mod-related issue that allowed Motherships to force-fire at the ground from beyond their central point.
+* Fixed a mod-related issue causing Stasis Shields to fail to cancel Mothership attacks.
+* Fixed an issue causing infantry units, excluding Zone Troopers, to inconsistently auto-acquire targets while inside Hammerheads.
+* Fixed an issue with the Hammerhead landing time delay buff. The delay should now remain consistent each time the unit lands or takes off.
+* Optimized the script to reduce table lookups, potentially improving overall performance. 
+* Fixed a crash on Tournament Reef and a desync issue on Hot Sands.
+* Adjusted the spawn positions on Toxicity to make it easier to counter early Shadow Team rushes.
+
 # R25 - R25h Changelog
 
 ## Hotfixes
