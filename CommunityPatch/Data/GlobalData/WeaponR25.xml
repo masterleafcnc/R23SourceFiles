@@ -462,12 +462,12 @@
 			Radius="100.0"
 			PartitionFilterTestType="CIRCLE"
 			EventName="PhaseFieldEvent"
+			ForbiddenTargetObjectStatus="IN_STASIS"
 			SendToAllies="true"
 		>
 			<SpecialObjectFilter
 					Relationship="ALLIES"
 					Rule="ANY"
-					ForbiddenTargetObjectStatus="IN_STASIS"
 					Exclude="AIRCRAFT INFANTRY"
 					Include="VEHICLE">
 					<!-- MCVs are phaseable, including the scrin family unpacking objects for
